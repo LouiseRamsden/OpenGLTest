@@ -13,6 +13,8 @@ public:
 
 	void Display();
 
+	void DrawPolygon();
+
 	~GLScene(void);
 };
 
