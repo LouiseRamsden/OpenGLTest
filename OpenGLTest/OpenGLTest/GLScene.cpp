@@ -28,11 +28,11 @@ void GLScene::DrawPolygon()
 		//Draw Object
 		//GlColor before vertexes
 		glColor4f(1.0f, 0.0f, 0.0f, 0.0f); //Red
-		glVertex2f(0.9f, 0.75);
+		glVertex2f(1.0f, 0.75);
 		glColor4f(0.0f, 1.0f, 0.0f, 0.0f); //Green
 		glVertex2f(0.5f, 0.0f);
 		glColor4f(0.0f, 0.0f, 1.0f, 0.0f); //Blue
-		glVertex2f(-0.75, 0.0f);
+		glVertex2f(-1.0f, -0.25f);
 		//End Drawing
 		glEnd();
 	}
