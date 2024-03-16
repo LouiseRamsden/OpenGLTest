@@ -1,5 +1,6 @@
 #include "GLScene.h"
 
+//GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
 {
 	GLUTCallbacks::Init(this);
@@ -10,6 +11,7 @@ GLScene::GLScene(int argc, char* argv[])
 	glutMainLoop();
 }
 
+//Display function, called continuously and draws screen
 void GLScene::Display() 
 {
 	//Clear Image
@@ -20,6 +22,7 @@ void GLScene::Display()
 	glFlush();
 }
 
+//Tester draw polygon function, contains random draw calls for messing around
 void GLScene::DrawPolygon() 
 {
 	//Begin Drawing
@@ -79,6 +82,7 @@ void GLScene::DrawPolygon()
 	
 }
 
+//Destructor
 GLScene::~GLScene(void) 
 {
 }

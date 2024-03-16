@@ -8,11 +8,13 @@ namespace GLUTCallbacks
 		GLScene* glScene = nullptr;
 	}
 
+	//Set current GL Scene to passed value
 	void Init(GLScene* gl) 
 	{
 		glScene = gl;
 	}
 
+	//Callback function that links to GlScene Display
 	void Display() 
 	{
 		if (glScene != nullptr) 
