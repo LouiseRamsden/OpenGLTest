@@ -5,6 +5,7 @@
 #include "GL\freeglut.h"
 #include "GLUTCallbacks.h"
 
+#define REFRESH_RATE 16
 
 class GLScene
 {
@@ -13,8 +14,13 @@ public:
 
 	void Display();
 
+	void Update();
+
 	void DrawPolygon();
 
 	~GLScene(void);
+private:
+	float rotation;
+	float rotationSpeedMult;
 };
 

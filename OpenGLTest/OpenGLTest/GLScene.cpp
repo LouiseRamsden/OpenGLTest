@@ -3,11 +3,16 @@
 //GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
 {
+
+	rotation = 0.0f;
+	rotationSpeedMult = 10.0f;
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("Hello World");
 	glutDisplayFunc(GLUTCallbacks::Display);
+	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
 	glutMainLoop();
 }
 
@@ -16,7 +21,7 @@ void GLScene::Display()
 {
 	//Clear Image
 	glClear(GL_COLOR_BUFFER_BIT);
-	//Draw Objects
+	//Draw Polygon
 	DrawPolygon();
 	//Flush GPU
 	glFlush();
@@ -25,6 +30,9 @@ void GLScene::Display()
 //Tester draw polygon function, contains random draw calls for messing around
 void GLScene::DrawPolygon() 
 {
+
+	glPushMatrix();
+	glRotatef(rotation * rotationSpeedMult, 0.0f, 0.0f, -1.0f);
 	//Begin Drawing
 	glBegin(GL_POLYGON);
 	{
@@ -39,47 +47,51 @@ void GLScene::DrawPolygon()
 		//End Drawing
 		glEnd();
 	}
-	for (int i = 0; i < 100; i++) 
-	{
-		glBegin(GL_POLYGON); 
-		{
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex2f(1.0f / (float)i, 1.0f / (float)i);
-			glVertex2f(1.0f / (float)i, 0.9f / (float)i);
-			glVertex2f(0.9f / (float)i, 0.9f / (float)i);
-			glVertex2f(0.9f / (float)i, 1.0f / (float)i);
-			glEnd();
-		}
-		glBegin(GL_POLYGON);
-		{
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex2f(1.0f / (float)-i, 1.0f / (float)-i);
-			glVertex2f(1.0f / (float)-i, 0.9f / (float)-i);
-			glVertex2f(0.9f / (float)-i, 0.9f / (float)-i);
-			glVertex2f(0.9f / (float)-i, 1.0f / (float)-i);
-			glEnd();
-		}
-		glBegin(GL_POLYGON);
-		{
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex2f(1.0f - (float)i/50, 1.0f / (float)i);
-			glVertex2f(1.0f - (float)i/50, 0.9f / (float)i);
-			glVertex2f(0.9f - (float)i/50, 0.9f / (float)i);
-			glVertex2f(0.9f - (float)i/50, 1.0f / (float)i);
-			glEnd();
-		}
-		glBegin(GL_POLYGON);
-		{
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex2f(1.0f / (float)i, 1.0f - (float)i/50);
-			glVertex2f(1.0f / (float)i, 0.9f - (float)i/50);
-			glVertex2f(0.9f / (float)i, 0.9f - (float)i/50);
-			glVertex2f(0.9f / (float)i, 1.0f - (float)i/50);
-			glEnd();
-		}
-	}
+	glPopMatrix();
 
-	
+	glPushMatrix();
+	glRotatef(rotation * rotationSpeedMult, 1.0f, 0.0f, 1.0f);
+	//Begin Drawing
+	glBegin(GL_POLYGON);
+	{
+		//Draw Object
+		//GlColor before vertexes
+		glColor4f(1.0f, 0.0f, 0.0f, 0.0f); //Red
+		glVertex2f(1.0f, 0.75);
+		glColor4f(0.0f, 1.0f, 0.0f, 0.0f); //Green
+		glVertex2f(0.5f, 0.0f);
+		glColor4f(0.0f, 0.0f, 1.0f, 0.0f); //Blue
+		glVertex2f(-1.0f, -0.25f);
+		//End Drawing
+		glEnd();
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+
+	glTranslatef(0.5f, 0.5f, 0.0f);
+	glRotatef(rotation * rotationSpeedMult, 0.0f, 0.0f, 1.0f);
+	glBegin(GL_POLYGON);
+	{
+		glColor4f(0.0f, 1.0f, 0.0f, 0.0f); //Green
+		glVertex2f(-0.25f,0.25f);
+		glVertex2f(0.25f, 0.25f);
+		glVertex2f(0.25f, -0.25f);
+		glVertex2f(-0.25f, -0.25f);
+	}
+	glEnd();
+	glPopMatrix();
+
+}
+
+void GLScene::Update() 
+{
+
+	rotation += 0.5f;
+	if (rotation >= 360.0f)
+		rotation = 0.0f;
+
+	glutPostRedisplay();
 }
 
 //Destructor
