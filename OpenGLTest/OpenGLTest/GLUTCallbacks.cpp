@@ -23,6 +23,8 @@ namespace GLUTCallbacks
 		}
 	}
 
+	//Callback function that is called each frame
+	//Additionally calls update
 	void Timer(int refreshMS)
 	{
 		if (glScene != nullptr)
@@ -34,6 +36,7 @@ namespace GLUTCallbacks
 		}
 	}
 
+	//Called whenever a key is pressed
 	void Keyboard(unsigned char key, int x, int y) 
 	{
 		glScene->Keyboard(key, x, y);

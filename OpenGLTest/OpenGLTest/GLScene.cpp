@@ -7,15 +7,22 @@ GLScene::GLScene(int argc, char* argv[])
 	rotation = 0.0f;
 	rotationSpeedMult = 10.0f;
 
+	//callback game scene init
 	GLUTCallbacks::Init(this);
+	
+	//glut init
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Hello World");
+	
+	//glut callback settings
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+
+	//call glut main loop
 	glutMainLoop();
 }
 
