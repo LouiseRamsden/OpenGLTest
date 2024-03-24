@@ -9,10 +9,13 @@ GLScene::GLScene(int argc, char* argv[])
 
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE);
 	glutInitWindowSize(800, 800);
+	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Hello World");
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutMainLoop();
 }
 
@@ -25,6 +28,7 @@ void GLScene::Display()
 	DrawPolygon();
 	//Flush GPU
 	glFlush();
+	glutSwapBuffers();
 }
 
 //Tester draw polygon function, contains random draw calls for messing around
@@ -90,8 +94,13 @@ void GLScene::Update()
 	rotation += 0.5f;
 	if (rotation >= 360.0f)
 		rotation = 0.0f;
-
 	glutPostRedisplay();
+}
+
+void GLScene::Keyboard(unsigned char key, int x, int y) 
+{
+	if (key == 'd')
+		rotationSpeedMult = 0.0f;
 }
 
 //Destructor

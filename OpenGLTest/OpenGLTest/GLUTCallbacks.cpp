@@ -27,8 +27,15 @@ namespace GLUTCallbacks
 	{
 		if (glScene != nullptr)
 		{
+			int updateTime = glutGet(GLUT_ELAPSED_TIME);
 			glScene->Update();
-			glutTimerFunc(refreshMS, GLUTCallbacks::Timer, refreshMS);
+			updateTime = glutGet(GLUT_ELAPSED_TIME) - updateTime;
+			glutTimerFunc(refreshMS - updateTime, GLUTCallbacks::Timer, refreshMS);
 		}
+	}
+
+	void Keyboard(unsigned char key, int x, int y) 
+	{
+		glScene->Keyboard(key, x, y);
 	}
 }
