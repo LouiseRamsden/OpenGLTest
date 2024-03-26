@@ -124,21 +124,37 @@ void GLScene::Update()
 
 void GLScene::Keyboard(unsigned char key, int x, int y)
 {
-	
-	// M STOP
-	if (key == 'm')
-		rotationSpeedMult = 0.0f;
-
-	// W AND S eye Z IN AND OUT
-	if (key == 's')
+	switch (key)
+	{
+		break;
+	case 's':
 		camera->eye.z += 0.05f;
-	if (key == 'w')
+		camera->center.z += 0.05f;
+		break;
+	case 'w':
 		camera->eye.z -= 0.05f;
-	
-	if (key == 'a')
+		camera->center.z -= 0.05f;
+		break;
+	case 'a':
+		camera->eye.x -= 0.05f;
+		camera->center.x -= 0.05f;
+		break;
+	case 'd':
+		camera->eye.x += 0.05f;
+		camera->center.x += 0.05f;
+		break;
+	case 'j':
 		rotation += 1.0f;
-	if (key == 'd')
+		break;
+	case 'l':
 		rotation -= 1.f;
+		break;
+	default:
+		break;
+		
+
+
+	}
 
 
 

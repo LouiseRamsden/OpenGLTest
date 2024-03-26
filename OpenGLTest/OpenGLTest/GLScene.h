@@ -14,7 +14,9 @@ struct Vector3
 
 struct Camera 
 {
-	Vector3 eye, center, up;
+	Vector3 eye, //View Position
+		center, //Look at target
+		up; //up vector
 };
 
 class GLScene
