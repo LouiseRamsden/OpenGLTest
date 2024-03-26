@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include <Windows.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -10,6 +11,13 @@
 struct Vector3 
 {
 	float x, y, z;
+	void normalize() 
+	{
+		float length = sqrtf((x * x) + (y * y) + (z * z));
+		x = x / length;
+		y = y / length;
+		z = z / length;
+	}
 };
 
 struct Camera 

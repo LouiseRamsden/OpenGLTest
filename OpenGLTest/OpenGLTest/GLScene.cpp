@@ -126,15 +126,16 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
+	//forward/backward
+	case 'w':
+		camera->eye.z -= 0.05f;
+		camera->center.z -= 0.05f;
 		break;
 	case 's':
 		camera->eye.z += 0.05f;
 		camera->center.z += 0.05f;
 		break;
-	case 'w':
-		camera->eye.z -= 0.05f;
-		camera->center.z -= 0.05f;
-		break;
+	//left/right
 	case 'a':
 		camera->eye.x -= 0.05f;
 		camera->center.x -= 0.05f;
@@ -143,11 +144,14 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		camera->eye.x += 0.05f;
 		camera->center.x += 0.05f;
 		break;
-	case 'j':
-		rotation += 1.0f;
+	//rotate
+	case 'q':
+		camera->center.x -= 0.05f;
+		camera->center.z -= 0.05f;
 		break;
-	case 'l':
-		rotation -= 1.f;
+	case 'e':
+		camera->center.x += 0.05f;
+		camera->center.z += 0.05f;
 		break;
 	default:
 		break;
