@@ -6,7 +6,21 @@ GLScene::GLScene(int argc, char* argv[])
 
 	rotation = 0.0f;
 	rotationSpeedMult = 10.0f;
+	
+	//camera init
+	camera = new Camera();
 
+	camera->eye.x = 0.0f;
+	camera->eye.y = 0.0f;
+	camera->eye.z = 1.0f;
+
+	camera->center.x = 0.0f;
+	camera->center.y = 0.0f;
+	camera->center.z = 0.0f;
+
+	camera->up.x = 0.0f;
+	camera->up.y = 1.0f;
+	camera->up.z = 0.0f;
 	//callback game scene init
 	GLUTCallbacks::Init(this);
 	
@@ -15,13 +29,27 @@ GLScene::GLScene(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_DOUBLE);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Hello World");
+	glutCreateWindow("Teapot Rotator Simulator");
 	
 	//glut callback settings
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 
+
+
+	//set matrix mode
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//set viewport to be entire window
+	glViewport(0, 0, 800, 800);
+
+	// set correct perspective
+	gluPerspective(45, 1, 0, 1000);
+
+	//set matrixmode back to modelview
+	glMatrixMode(GL_MODELVIEW);
+	
 	//call glut main loop
 	glutMainLoop();
 }
@@ -43,7 +71,6 @@ void GLScene::DrawPolygon()
 {
 
 	glPushMatrix();
-	glRotatef(rotation * rotationSpeedMult, 0.0f, 0.0f, -1.0f);
 	//Begin Drawing
 	glBegin(GL_POLYGON);
 	{
@@ -61,56 +88,65 @@ void GLScene::DrawPolygon()
 	glPopMatrix();
 
 	glPushMatrix();
-	glRotatef(rotation * rotationSpeedMult, 1.0f, 0.0f, 1.0f);
-	//Begin Drawing
-	glBegin(GL_POLYGON);
-	{
-		//Draw Object
-		//GlColor before vertexes
-		glColor4f(1.0f, 0.0f, 0.0f, 0.0f); //Red
-		glVertex2f(1.0f, 0.75);
-		glColor4f(0.0f, 1.0f, 0.0f, 0.0f); //Green
-		glVertex2f(0.5f, 0.0f);
-		glColor4f(0.0f, 0.0f, 1.0f, 0.0f); //Blue
-		glVertex2f(-1.0f, -0.25f);
-		//End Drawing
-		glEnd();
-	}
+	glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, 0.0f);
+	glutWireTeapot(0.1);
 	glPopMatrix();
 
 	glPushMatrix();
-
-	glTranslatef(0.5f, 0.5f, 0.0f);
-	glRotatef(rotation * rotationSpeedMult, 0.0f, 0.0f, 1.0f);
-	glBegin(GL_POLYGON);
-	{
-		glColor4f(0.0f, 1.0f, 0.0f, 0.0f); //Green
-		glVertex2f(-0.25f,0.25f);
-		glVertex2f(0.25f, 0.25f);
-		glVertex2f(0.25f, -0.25f);
-		glVertex2f(-0.25f, -0.25f);
-	}
-	glEnd();
+	glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, 0.0f);
+	glutWireCube(0.4);
 	glPopMatrix();
 
 }
 
 void GLScene::Update() 
 {
+	// resets modelview matrix
+	glLoadIdentity();
 
-	rotation += 0.5f;
+	//camera lookat (Hell Function Call)
+	gluLookAt(camera->eye.x,
+		camera->eye.y,
+		camera->eye.z,
+		camera->center.x,
+		camera->center.y,
+		camera->center.z,
+		camera->up.x,
+		camera->up.y,
+		camera->up.z);
+
 	if (rotation >= 360.0f)
 		rotation = 0.0f;
 	glutPostRedisplay();
 }
 
-void GLScene::Keyboard(unsigned char key, int x, int y) 
+void GLScene::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'd')
+	
+	// M STOP
+	if (key == 'm')
 		rotationSpeedMult = 0.0f;
+
+	// W AND S eye Z IN AND OUT
+	if (key == 's')
+		camera->eye.z += 0.05f;
+	if (key == 'w')
+		camera->eye.z -= 0.05f;
+	
+	if (key == 'a')
+		rotation += 1.0f;
+	if (key == 'd')
+		rotation -= 1.f;
+
+
+
 }
 
 //Destructor
 GLScene::~GLScene(void) 
 {
+	delete camera;
+	camera = nullptr;
 }

@@ -7,6 +7,16 @@
 
 #define REFRESH_RATE 16
 
+struct Vector3 
+{
+	float x, y, z;
+};
+
+struct Camera 
+{
+	Vector3 eye, center, up;
+};
+
 class GLScene
 {
 public:
@@ -24,5 +34,7 @@ public:
 private:
 	float rotation;
 	float rotationSpeedMult;
+
+	Camera* camera;
 };
 
