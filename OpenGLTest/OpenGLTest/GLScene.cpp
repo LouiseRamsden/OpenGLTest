@@ -118,7 +118,7 @@ void GLScene::Update()
 		camera->up.z);
 
 	if (rotation >= 360.0f)
-		rotation = 0.0f;
+		rotation = rotation - 360.0f;
 	glutPostRedisplay();
 }
 
@@ -144,14 +144,12 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		camera->eye.x += 0.05f;
 		camera->center.x += 0.05f;
 		break;
-	//rotate
+	//rotate object
 	case 'q':
-		camera->center.x -= 0.05f;
-		camera->center.z -= 0.05f;
+		rotation -= 5.0f;
 		break;
 	case 'e':
-		camera->center.x += 0.05f;
-		camera->center.z += 0.05f;
+		rotation += 5.0f;
 		break;
 	default:
 		break;
