@@ -27,6 +27,16 @@ struct Camera
 		up; //up vector
 };
 
+struct Color 
+{
+	GLfloat r, g, b;
+};
+
+struct Vertex 
+{
+	GLfloat x, y, z;
+};
+
 class GLScene
 {
 public:
@@ -40,10 +50,21 @@ public:
 
 	void DrawPolygon();
 
+	void DrawCube();
+
+	void DrawCubeArray();
+
 	~GLScene(void);
 private:
 	float rotation;
 	float rotationSpeedMult;
+
+	static Vertex vertices[];
+	static Color colors[];
+
+	static Vertex indexedVertices[];
+	static Color indexedColors[];
+	static GLushort indices[];
 
 	Camera* camera;
 };
