@@ -119,7 +119,8 @@ void GLScene::Display()
 	glClear(GL_COLOR_BUFFER_BIT);
 	//Draw Polygon
 	//DrawPolygon();
-	DrawCubeArray();
+	//DrawCubeArray();
+	DrawCubeArrayAlt();
 	//Flush GPU
 	glFlush();
 	glutSwapBuffers();
@@ -350,6 +351,50 @@ void GLScene::DrawCubeArray()
 	}
 	glEnd();
 	glPopMatrix();
+}
+void GLScene::DrawCubeArrayAlt() 
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glColorPointer(3, GL_FLOAT, 0, colors);
+
+	glPushMatrix();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+}
+
+void GLScene::DrawIndexedCube() 
+{
+	glPushMatrix();
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 36; i++) 
+	{
+		glColor3f(indexedColors[indices[i]].r, indexedColors[indices[i]].g, indexedColors[indices[i]].b);
+		glVertex3f(indexedVertices[indices[i]].x, indexedVertices[indices[i]].y, indexedVertices[indices[i]].z);
+	}
+	glEnd();
+	glPopMatrix();
+}
+
+void GLScene::DrawIndexedCubeAlt() 
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
+	glColorPointer(3, GL_FLOAT, 0, indexedColors);
+
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, indices);
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void GLScene::Update() 

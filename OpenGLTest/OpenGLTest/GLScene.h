@@ -54,6 +54,12 @@ public:
 
 	void DrawCubeArray();
 
+	void DrawCubeArrayAlt();
+
+	void DrawIndexedCube();
+
+	void DrawIndexedCubeAlt();
+
 	~GLScene(void);
 private:
 	float rotation;
