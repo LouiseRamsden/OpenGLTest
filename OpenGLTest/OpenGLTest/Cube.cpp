@@ -24,12 +24,21 @@ GLushort Cube::indices[] = {
 };
 
 
-Cube::Cube(float x, float y, float z) 
+Cube::Cube(float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) 
 {
+
+	m_xActive = xRot;
+	m_yActive = yRot;
+	m_zActive = zRot;
+
+	m_rotSpeed = rotSpeed;
+
 	m_rotation = 0.0f;
 	m_position.x = x;
 	m_position.y = y;
 	m_position.z = z;
+
+		
 }
 Cube::~Cube() 
 {
@@ -39,10 +48,7 @@ Cube::~Cube()
 void Cube::SetRotation(float rotation) 
 {
 	m_rotation = rotation;
-	if (m_rotation > 360.0f) 
-	{
-		m_rotation -= 360.f;
-	}
+	
 }
 
 void Cube::Draw()
@@ -55,7 +61,7 @@ void Cube::Draw()
 
 	glPushMatrix();
 	glTranslatef(m_position.x, m_position.y, m_position.z);
-	glRotatef(m_rotation, 1.0f, 0.0f, 0.0f);
+	glRotatef(m_rotation, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, indices);
 	glPopMatrix();
 
@@ -65,5 +71,9 @@ void Cube::Draw()
 
 void Cube::Update() 
 {
-	m_rotation += 0.1f;
+	m_rotation += m_rotSpeed;
+	if (m_rotation > 360.0f)
+	{
+		m_rotation -= 360.f;
+	}
 }

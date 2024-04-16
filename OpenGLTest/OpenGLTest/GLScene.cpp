@@ -3,16 +3,20 @@
 
 //GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
-{
-
-	rotation = 0.0f;
-	rotationSpeedMult = 10.0f;
-	
+{	
 	//camera init
 	camera = new Camera();
-	
-	cube = new Cube(1.0f, 1.0f, 1.0f);
-	cube2 = new Cube(-1.0f, -1.0f, -1.0f);
+
+	//make cube(s)
+	for(int i = 0; i < 200; i++)
+		cube[i] = new Cube(
+		(rand() % (20 - -20 + 1)) + -20.0f,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(bool)(rand() % 2),
+			(bool)(rand() % 2),
+			(bool)(rand() % 2),
+			(rand() % (5 - -5 + 1)) + -5.0f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -84,8 +88,8 @@ void GLScene::Display()
 {
 	//Clear Image
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	cube->Draw();
-	cube2->Draw();
+	for (int i = 0; i < 200; i++)
+		cube[i]->Draw();
 	//Flush GPU
 	glFlush();
 	glutSwapBuffers();
@@ -107,11 +111,9 @@ void GLScene::Update()
 		camera->up.y,
 		camera->up.z);
 
-	cube->Update();
-	cube2->Update();
+	for (int i = 0; i < 200; i++)
+		cube[i]->Update();
 
-	if (rotation >= 360.0f)
-		rotation = rotation - 360.0f;
 	glutPostRedisplay();
 }
 
@@ -121,28 +123,21 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 	{
 	//forward/backward
 	case 'w':
-		camera->eye.z -= 0.05f;
-		camera->center.z -= 0.05f;
+		camera->eye.z -= 0.5f;
+		camera->center.z -= 0.5f;
 		break;
 	case 's':
-		camera->eye.z += 0.05f;
-		camera->center.z += 0.05f;
+		camera->eye.z += 0.5f;
+		camera->center.z += 0.5f;
 		break;
 	//left/right
 	case 'a':
-		camera->eye.x -= 0.05f;
-		camera->center.x -= 0.05f;
+		camera->eye.x -= 0.5f;
+		camera->center.x -= 0.5f;
 		break;
 	case 'd':
-		camera->eye.x += 0.05f;
-		camera->center.x += 0.05f;
-		break;
-	//rotate object
-	case 'q':
-		rotation -= 5.0f;
-		break;
-	case 'e':
-		rotation += 5.0f;
+		camera->eye.x += 0.5f;
+		camera->center.x += 0.5f;
 		break;
 	default:
 		break;

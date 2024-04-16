@@ -26,11 +26,7 @@ public:
 
 	~GLScene(void);
 private:
-	float rotation;
-	float rotationSpeedMult;
-
 	Camera* camera;
-	Cube* cube;
-	Cube* cube2;
+	Cube* cube[200];
 };
 
