@@ -1,8 +1,11 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Cube.h"
+
+
 
 Vertex* Cube::indexedVertices = nullptr;
 
-Color* Cube::indexedColors = nullptr;
+Color* Cube::indexedColors = new Color[1];
 
 GLushort* Cube::indices = nullptr;
 
@@ -14,7 +17,6 @@ int Cube::numIndices = 0;
 
 Cube::Cube(float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) 
 {
-
 
 	m_xActive = xRot;
 	m_yActive = yRot;
@@ -111,60 +113,66 @@ bool Cube::LoadTXT(char* path)
 
 bool Cube::LoadOBJ(char* path) 
 {
-	std::ifstream inFile;
-	inFile.open(path);
-	if (!inFile.good())
+	std::vector<GLushort> tempIndices;
+	std::vector<Vertex> tempVertices;
+
+	FILE* file = fopen(path, "r");
+	if (file == NULL) 
 	{
-		std::cerr << "Can't open text file " << path << std::endl;
+		std::cerr << "Unable to open file\n";
 		return false;
 	}
 
-	Vertex vertexBuffer[20000];
-	GLushort indicesBuffer[20000];
-
-	char temp;
-	
-	while (!inFile.eof()) 
+	while (true) 
 	{
-		inFile >> temp;
-		switch (temp) 
+		char lineHeader[128];
+
+		int res = fscanf(file, "%s", lineHeader);
+		if (res == EOF)
+			break;
+
+		if (strcmp(lineHeader, "v") == 0) 
 		{
-		case 'v':
-			inFile >> vertexBuffer[numVertices].x;
-			inFile >> vertexBuffer[numVertices].y;
-			inFile >> vertexBuffer[numVertices].z;
+			Vertex vertex;
+			fscanf_s(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+			tempVertices.push_back(vertex);
 			numVertices++;
-			break;
-		case 'f':
-			inFile >> indicesBuffer[numIndices];
-			numIndices++;
-			inFile >> indicesBuffer[numIndices];
-			numIndices++;
-			inFile >> indicesBuffer[numIndices];
-			numIndices++;
-			break;
-		default:
-			break;
+		}
+		else if (strcmp(lineHeader, "f") == 0) 
+		{
+			GLuint vertexIndex[3];
+
+			int matches = fscanf(file, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1], &vertexIndex[2]);
+			if (matches != 3) 
+			{
+				std::cerr << "Error with file";
+				return false;
+			}
+			tempIndices.push_back(vertexIndex[0]);
+			tempIndices.push_back(vertexIndex[1]);
+			tempIndices.push_back(vertexIndex[2]);
+			numIndices += 3;
 		}
 	}
-
 	indexedVertices = new Vertex[numVertices];
-	numColors = numVertices;
-	indexedColors = new Color[numColors];
-	indices = new GLushort[numIndices];
 	for (int i = 0; i < numVertices; i++) 
 	{
-		vertexBuffer[i] = indexedVertices[i];
+		indexedVertices[i] = tempVertices[i];
 	}
+	indexedColors = new Color[numVertices];
+	numColors = numVertices;
 	for (int i = 0; i < numColors; i++)
 	{
-		indexedColors[i] = { 0.0f,1.0f,0.0f };
+		indexedColors[i].r = 1.0f;
+		indexedColors[i].g = 0.0f;
+		indexedColors[i].b = 1.0f;
 	}
+	indices = new GLushort[numIndices];
 	for (int i = 0; i < numIndices; i++) 
 	{
-		indicesBuffer[i] = indices[i];
+		indices[i] = tempIndices[i];
 	}
 
-	inFile.close();
 	return true;
+
 }

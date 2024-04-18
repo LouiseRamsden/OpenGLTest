@@ -11,6 +11,7 @@ GLScene::GLScene(int argc, char* argv[])
 	//Cube::LoadTXT((char*)"cube.txt");
 	//load cubes
 	Cube::LoadOBJ((char*)"teapot.obj");
+	//Cube::LoadTXT((char*)"cube.txt");
 
 	//make cube(s)
 	srand(time(NULL));
