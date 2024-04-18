@@ -7,12 +7,17 @@
 #include "GL/freeglut.h"
 #include "Structs.h"
 
+#include <fstream>
+#include <iostream>
+
 class Cube
 {
 private:
-	static Vertex indexedVertices[];
-	static Color indexedColors[];
-	static GLushort indices[];
+	static Vertex* indexedVertices;
+	static Color* indexedColors;
+	static GLushort* indices;
+	static int numVertices, numColors, numIndices;
+
 
 	Vector3 m_position;
 	float m_rotation;
@@ -31,5 +36,9 @@ public:
 	void SetRotation(float rotation);
 	void Draw();
 	void Update();
+
+	static bool LoadTXT(char* path);
+
+	static bool LoadOBJ(char* path);
 };
 

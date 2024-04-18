@@ -1,5 +1,6 @@
 #include "GLScene.h"
 
+#include <time.h>
 
 //GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
@@ -7,7 +8,12 @@ GLScene::GLScene(int argc, char* argv[])
 	//camera init
 	camera = new Camera();
 
+	//Cube::LoadTXT((char*)"cube.txt");
+	//load cubes
+	Cube::LoadOBJ((char*)"teapot.obj");
+
 	//make cube(s)
+	srand(time(NULL));
 	for(int i = 0; i < 200; i++)
 		cube[i] = new Cube(
 		(rand() % (20 - -20 + 1)) + -20.0f,
