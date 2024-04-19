@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+
 #include "Cube.h"
 
 
@@ -111,74 +111,111 @@ bool Cube::LoadTXT(char* path)
 
 }
 
-bool Cube::LoadOBJ(char* path) 
+bool Cube::LoadOBJ(char* path)
 {
-	std::vector<GLushort> tempIndices;
-	std::vector<Vertex> tempVertices;
+	
 
-	FILE* file = fopen(path, "r");
-	if (file == NULL) 
+	//FILE* file = fopen(path, "r");
+	//if (file == NULL) 
+	//{
+	//	std::cerr << "Unable to open file\n";
+	//	return false;
+	//}
+	std::ifstream inFile;
+	inFile.open(path);
+	if (!inFile.good())
 	{
-		std::cerr << "Unable to open file\n";
+		std::cerr << "Can't open text file " << path << std::endl;
 		return false;
 	}
-
-	while (true) 
-	{
-		char lineHeader[128];
-
-		int res = fscanf(file, "%s", lineHeader);
-		if (res == EOF)
-			break;
-
-		if (strcmp(lineHeader, "v") == 0) 
-		{
-			Vertex vertex;
-			fscanf_s(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
-			tempVertices.push_back(vertex);
-			numVertices++;
-		}
-		else if (strcmp(lineHeader, "f") == 0) 
-		{
-			GLuint vertexIndex[3];
-
-			int matches = fscanf(file, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1], &vertexIndex[2]);
-			if (matches != 3) 
-			{
-				std::cerr << "Error with file";
-				return false;
-			}
-			
-
-			tempIndices.push_back(vertexIndex[0]);
-			tempIndices.push_back(vertexIndex[1]);
-			tempIndices.push_back(vertexIndex[2]);
-			
-			numIndices += 3;
-		}
-	}
-	indexedVertices = new Vertex[numVertices];
-	indexedColors = new Color[numVertices];
-	numColors = numVertices;
-	for (int i = 0; i < numVertices; i++) 
-	{
-		indexedVertices[i] = tempVertices[i];
-	}
 	
-	for (int i = 0; i < numColors; i++)
+	std::vector<GLushort> tempIndices;
+	std::vector<Vertex> tempVertices;
+	std::string input;
+	bool vertMode;
+	bool indexMode;
+	int lineNum = 0;
+	for (std::string line; std::getline(inFile, line, ' ');) //Problem Splitting String 
 	{
-		indexedColors[i].r = (float) 1/(i/1000);
-		indexedColors[i].g = 0.0f;
-		indexedColors[i].b = 0.0f;
+		if (line == "v" || line.find("v"))
+		{
+			vertMode = true;
+			indexMode = false;
+			tempVertices.push_back({ 0,0,0 });
+			numVertices++;
+			lineNum = 0;
+		}
+		if (line == "f" || line.find("f"))
+		{
+			indexMode = true;
+			vertMode = false;
+			tempIndices.push_back(0);
+			tempIndices.push_back(0);
+			tempIndices.push_back(0);
+			numIndices += 3;
+			lineNum = 0;
+		}
+		std::cout << line << std::endl;
 	}
-	indices = new GLushort[numIndices];
-	for (int i = 0; i < numIndices; i++) 
-	{
-		indices[i] = tempIndices[i];
-	}
-
+	std::cout << numIndices << "Number Of Indices" << std::endl;
+	std::cout << numVertices << "Number of Vertices" << std::endl;
 	return true;
-
 }
+//	while (true)
+//	{
+//
+//
+//
+//
+//
+//		if (strcmp(lineHeader, "v") == 0) 
+//		{
+//			Vertex vertex;
+//			fscanf_s(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+//			tempVertices.push_back(vertex);
+//			numVertices++;
+//		}
+//		else if (strcmp(lineHeader, "f") == 0) 
+//		{
+//			GLuint vertexIndex[3];
+//
+//			int matches = fscanf(file, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1], &vertexIndex[2]);
+//			if (matches != 3) 
+//			{
+//				std::cerr << "Error with file";
+//				return false;
+//			}
+//			
+//
+//			tempIndices.push_back(vertexIndex[0]);
+//			tempIndices.push_back(vertexIndex[1]);
+//			tempIndices.push_back(vertexIndex[2]);
+//			
+//			numIndices += 3;
+//		}
+//	}
+//	indexedVertices = new Vertex[numVertices];
+//	indexedColors = new Color[numVertices];
+//	numColors = numVertices;
+//	for (int i = 0; i < numVertices; i++) 
+//	{
+//		indexedVertices[i] = tempVertices[i];
+//	}
+//	
+//	for (int i = 0; i < numColors; i++)
+//	{
+//		indexedColors[i].r = (float) 1/(i/1000);
+//		indexedColors[i].g = 0.0f;
+//		indexedColors[i].b = 0.0f;
+//	}
+//	indices = new GLushort[numIndices];
+//	for (int i = 0; i < numIndices; i++) 
+//	{
+//		indices[i] = tempIndices[i];
+//	}
+//
+//	return true;
+//
+//}
 
 //Rewrite the general gist of this in C++ style, and then see if it works.

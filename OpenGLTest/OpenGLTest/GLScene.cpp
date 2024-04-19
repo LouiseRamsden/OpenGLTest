@@ -24,7 +24,10 @@ GLScene::GLScene(int argc, char* argv[])
 	//		(bool)(rand() % 2),
 	//		(bool)(rand() % 2),
 	//		(rand() % (5 - -5 + 1)) + -5.0f);
-	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 1.0f);
+	
+
+
+	//teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 1.0f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -98,7 +101,11 @@ void GLScene::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//for (int i = 0; i < 200; i++)
 	//	cube[i]->Draw();
-	teapot->Draw();
+	// 
+	// 
+	//teapot->Draw();
+	// 
+	// 
 	//Flush GPU
 	glFlush();
 	glutSwapBuffers();
@@ -122,7 +129,11 @@ void GLScene::Update()
 
 	//for (int i = 0; i < 200; i++)
 	//	cube[i]->Update();
-	teapot->Update();
+	// 
+	// 
+	//teapot->Update();
+
+
 
 	glutPostRedisplay();
 }
