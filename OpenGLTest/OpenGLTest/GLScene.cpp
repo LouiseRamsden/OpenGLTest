@@ -14,16 +14,17 @@ GLScene::GLScene(int argc, char* argv[])
 	//Cube::LoadTXT((char*)"cube.txt");
 
 	//make cube(s)
-	srand(time(NULL));
-	for(int i = 0; i < 200; i++)
-		cube[i] = new Cube(
-		(rand() % (20 - -20 + 1)) + -20.0f,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(bool)(rand() % 2),
-			(bool)(rand() % 2),
-			(bool)(rand() % 2),
-			(rand() % (5 - -5 + 1)) + -5.0f);
+	//srand(time(NULL));
+	//for(int i = 0; i < 200; i++)
+	//	cube[i] = new Cube(
+	//	(rand() % (20 - -20 + 1)) + -20.0f,
+	//		(rand() % (20 - -20 + 1)) + -20.0f,
+	//		(rand() % (20 - -20 + 1)) + -20.0f,
+	//		(bool)(rand() % 2),
+	//		(bool)(rand() % 2),
+	//		(bool)(rand() % 2),
+	//		(rand() % (5 - -5 + 1)) + -5.0f);
+	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 1.0f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -95,8 +96,9 @@ void GLScene::Display()
 {
 	//Clear Image
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < 200; i++)
-		cube[i]->Draw();
+	//for (int i = 0; i < 200; i++)
+	//	cube[i]->Draw();
+	teapot->Draw();
 	//Flush GPU
 	glFlush();
 	glutSwapBuffers();
@@ -118,8 +120,9 @@ void GLScene::Update()
 		camera->up.y,
 		camera->up.z);
 
-	for (int i = 0; i < 200; i++)
-		cube[i]->Update();
+	//for (int i = 0; i < 200; i++)
+	//	cube[i]->Update();
+	teapot->Update();
 
 	glutPostRedisplay();
 }

@@ -148,24 +148,28 @@ bool Cube::LoadOBJ(char* path)
 				std::cerr << "Error with file";
 				return false;
 			}
+			
+
 			tempIndices.push_back(vertexIndex[0]);
 			tempIndices.push_back(vertexIndex[1]);
 			tempIndices.push_back(vertexIndex[2]);
+			
 			numIndices += 3;
 		}
 	}
 	indexedVertices = new Vertex[numVertices];
+	indexedColors = new Color[numVertices];
+	numColors = numVertices;
 	for (int i = 0; i < numVertices; i++) 
 	{
 		indexedVertices[i] = tempVertices[i];
 	}
-	indexedColors = new Color[numVertices];
-	numColors = numVertices;
+	
 	for (int i = 0; i < numColors; i++)
 	{
-		indexedColors[i].r = 1.0f;
+		indexedColors[i].r = (float) 1/(i/1000);
 		indexedColors[i].g = 0.0f;
-		indexedColors[i].b = 1.0f;
+		indexedColors[i].b = 0.0f;
 	}
 	indices = new GLushort[numIndices];
 	for (int i = 0; i < numIndices; i++) 
@@ -176,3 +180,5 @@ bool Cube::LoadOBJ(char* path)
 	return true;
 
 }
+
+//Rewrite the general gist of this in C++ style, and then see if it works.

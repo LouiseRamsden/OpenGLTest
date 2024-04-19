@@ -28,5 +28,6 @@ public:
 private:
 	Camera* camera;
 	Cube* cube[200];
+	Cube* teapot;
 };
 
