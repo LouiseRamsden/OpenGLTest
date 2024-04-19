@@ -135,7 +135,7 @@ bool Cube::LoadOBJ(char* path)
 	bool vertMode;
 	bool indexMode;
 	int lineNum = 0;
-	for (std::string line; std::getline(inFile, line, ' ');) //Problem Splitting String 
+	for (std::string line; std::getline(inFile, line, ' ');)
 	{
 		if (line == "v" || line.find("v"))
 		{
