@@ -141,10 +141,9 @@ bool Cube::LoadOBJ(char* path)
 	{
 		
 		std::istringstream a;
-		a.str(line);
+		a.str(line);		
 		for (std::string token; std::getline(a, token, ' ');)
 		{
-
 			if (vertMode == true)
 			{
 				switch (lineNum)
@@ -164,7 +163,7 @@ bool Cube::LoadOBJ(char* path)
 			}
 			if (indexMode == true) 
 			{
-				if (token != "f") 
+				if (token != "f" || token!= "#")
 				{
 					tempIndices[numIndices - 3 + lineNum] = (GLushort)stoi(token);
 					lineNum++;
@@ -194,7 +193,8 @@ bool Cube::LoadOBJ(char* path)
 			
 			
 		}
-		
+		indexMode = false;
+		vertMode = false;
 	}
 
 	numColors = numVertices;
