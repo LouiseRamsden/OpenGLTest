@@ -204,21 +204,24 @@ bool Cube::LoadOBJ(char* path)
 
 	for (int i = 0; i < numVertices; i++)
 	{
-		 indexedVertices[i].x = tempVertices[i].x;
-		 indexedVertices[i].y = tempVertices[i].y;
 		 indexedVertices[i].z = tempVertices[i].z;
+		 indexedVertices[i].y = tempVertices[i].y;
+		 indexedVertices[i].x = tempVertices[i].x;
 	}
 
 	for (int i = 0; i < numIndices; i++)
 	{
-		indices[i] = tempIndices[i];
+		indices[i] = tempIndices[i] - 1;
 	}
 
 	for (int i = 0; i < numColors; i++) 
 	{
-		indexedColors[i].r = 0.0f;
+		indexedColors[i].r = (float)(1.0f / i) * 1000;
 		indexedColors[i].g = 0.0f;
 		indexedColors[i].b = 1.0f;
 	}
+
+	std::cout << numIndices << " Indices" << std::endl;
+	std::cout << numVertices << " Vertices" << std::endl;
 	return true;
 }
