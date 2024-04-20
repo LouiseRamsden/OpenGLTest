@@ -1,6 +1,7 @@
 
 #include "Cube.h"
 
+#include <sstream>
 
 
 Vertex* Cube::indexedVertices = nullptr;
@@ -53,6 +54,7 @@ void Cube::Draw()
 		glColorPointer(3, GL_FLOAT, 0, indexedColors);
 
 		glPushMatrix();
+
 		glTranslatef(m_position.x, m_position.y, m_position.z);
 		glRotatef(m_rotation, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, indices);
@@ -132,90 +134,91 @@ bool Cube::LoadOBJ(char* path)
 	std::vector<GLushort> tempIndices;
 	std::vector<Vertex> tempVertices;
 	std::string input;
-	bool vertMode;
-	bool indexMode;
+	bool vertMode = false;
+	bool indexMode = false;
 	int lineNum = 0;
-	for (std::string line; std::getline(inFile, line, ' ');)
+	for (std::string line; std::getline(inFile, line,'\n');) 
 	{
-		if (line == "v" || line.find("v"))
+		
+		std::istringstream a;
+		a.str(line);
+		for (std::string token; std::getline(a, token, ' ');)
 		{
-			vertMode = true;
-			indexMode = false;
-			tempVertices.push_back({ 0,0,0 });
-			numVertices++;
-			lineNum = 0;
+
+			if (vertMode == true)
+			{
+				switch (lineNum)
+				{
+				case 0:
+					tempVertices[numVertices - 1].x = (GLfloat)stof(token);
+					break;
+				case 1:
+					tempVertices[numVertices - 1].y = (GLfloat)stof(token);
+					break;
+				case 2:
+					tempVertices[numVertices - 1].z = (GLfloat)stof(token);
+					break;
+				}
+				lineNum++;
+
+			}
+			if (indexMode == true) 
+			{
+				if (token != "f") 
+				{
+					tempIndices[numIndices - 3 + lineNum] = (GLushort)stoi(token);
+					lineNum++;
+				}
+
+			}
+			if (token == "v")
+			{
+				vertMode = true;
+				indexMode = false;
+				tempVertices.push_back({ 0,0,0 });
+				numVertices++;
+				lineNum = 0;
+			}
+			if (token == "f")
+			{
+				indexMode = true;
+				vertMode = false;
+				tempIndices.push_back(0);
+				tempIndices.push_back(0);
+				tempIndices.push_back(0);
+				numIndices += 3;
+				lineNum = 0;
+			}
+
+			
+			
+			
 		}
-		if (line == "f" || line.find("f"))
-		{
-			indexMode = true;
-			vertMode = false;
-			tempIndices.push_back(0);
-			tempIndices.push_back(0);
-			tempIndices.push_back(0);
-			numIndices += 3;
-			lineNum = 0;
-		}
-		std::cout << line << std::endl;
+		
 	}
-	std::cout << numIndices << "Number Of Indices" << std::endl;
-	std::cout << numVertices << "Number of Vertices" << std::endl;
+
+	numColors = numVertices;
+	indices = new GLushort[numIndices];
+	indexedVertices = new Vertex[numVertices];
+	indexedColors = new Color[numColors];
+
+	for (int i = 0; i < numVertices; i++)
+	{
+		 indexedVertices[i].x = tempVertices[i].x;
+		 indexedVertices[i].y = tempVertices[i].y;
+		 indexedVertices[i].z = tempVertices[i].z;
+	}
+
+	for (int i = 0; i < numIndices; i++)
+	{
+		indices[i] = tempIndices[i];
+	}
+
+	for (int i = 0; i < numColors; i++) 
+	{
+		indexedColors[i].r = 0.0f;
+		indexedColors[i].g = 0.0f;
+		indexedColors[i].b = 1.0f;
+	}
 	return true;
 }
-//	while (true)
-//	{
-//
-//
-//
-//
-//
-//		if (strcmp(lineHeader, "v") == 0) 
-//		{
-//			Vertex vertex;
-//			fscanf_s(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
-//			tempVertices.push_back(vertex);
-//			numVertices++;
-//		}
-//		else if (strcmp(lineHeader, "f") == 0) 
-//		{
-//			GLuint vertexIndex[3];
-//
-//			int matches = fscanf(file, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1], &vertexIndex[2]);
-//			if (matches != 3) 
-//			{
-//				std::cerr << "Error with file";
-//				return false;
-//			}
-//			
-//
-//			tempIndices.push_back(vertexIndex[0]);
-//			tempIndices.push_back(vertexIndex[1]);
-//			tempIndices.push_back(vertexIndex[2]);
-//			
-//			numIndices += 3;
-//		}
-//	}
-//	indexedVertices = new Vertex[numVertices];
-//	indexedColors = new Color[numVertices];
-//	numColors = numVertices;
-//	for (int i = 0; i < numVertices; i++) 
-//	{
-//		indexedVertices[i] = tempVertices[i];
-//	}
-//	
-//	for (int i = 0; i < numColors; i++)
-//	{
-//		indexedColors[i].r = (float) 1/(i/1000);
-//		indexedColors[i].g = 0.0f;
-//		indexedColors[i].b = 0.0f;
-//	}
-//	indices = new GLushort[numIndices];
-//	for (int i = 0; i < numIndices; i++) 
-//	{
-//		indices[i] = tempIndices[i];
-//	}
-//
-//	return true;
-//
-//}
-
-//Rewrite the general gist of this in C++ style, and then see if it works.

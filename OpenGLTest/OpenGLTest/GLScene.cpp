@@ -27,7 +27,7 @@ GLScene::GLScene(int argc, char* argv[])
 	
 
 
-	//teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 1.0f);
+	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 1.0f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -103,7 +103,7 @@ void GLScene::Display()
 	//	cube[i]->Draw();
 	// 
 	// 
-	//teapot->Draw();
+	teapot->Draw();
 	// 
 	// 
 	//Flush GPU
@@ -131,7 +131,7 @@ void GLScene::Update()
 	//	cube[i]->Update();
 	// 
 	// 
-	//teapot->Update();
+	teapot->Update();
 
 
 
