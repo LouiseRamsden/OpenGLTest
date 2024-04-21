@@ -55,7 +55,7 @@ void Cube::Draw()
 
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
-		glTranslatef(0.0f, 0.0f, 0.0f);
+		glTranslatef(0.0f, -2.5f, 0.0f);
 		glRotatef(m_rotation, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, indices);
 		glPopMatrix();
@@ -216,9 +216,9 @@ bool Cube::LoadOBJ(char* path)
 
 	for (int i = 0; i < numColors; i++) 
 	{
-		indexedColors[i].r = (float)(1.0f / i) * 1000;
-		indexedColors[i].g = 0.0f;
-		indexedColors[i].b = 1.0f;
+		indexedColors[i].r = indexedVertices[i].x;
+		indexedColors[i].g = indexedVertices[i].y;
+		indexedColors[i].b = indexedVertices[i].z;
 	}
 
 	std::cout << numIndices << " Indices" << std::endl;
