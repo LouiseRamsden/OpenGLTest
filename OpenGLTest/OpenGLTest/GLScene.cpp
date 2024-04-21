@@ -27,7 +27,7 @@ GLScene::GLScene(int argc, char* argv[])
 	
 
 
-	teapot = new Cube(1.0f, 1.0f, 1.0f, false, true, false, 1.0f);
+	teapot = new Cube(1.0f, 1.0f, 1.0f, true, true, false, 0.009f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
