@@ -133,7 +133,7 @@ void GLScene::Update()
 	// 
 	// 
 	teapot->Update();
-
+	//
 
 
 	glutPostRedisplay();

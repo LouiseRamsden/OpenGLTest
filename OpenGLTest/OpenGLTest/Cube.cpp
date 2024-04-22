@@ -64,7 +64,7 @@ void Cube::Draw()
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 	}
-}
+}//
 
 void Cube::Update() 
 {
