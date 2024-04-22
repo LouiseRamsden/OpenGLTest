@@ -27,7 +27,7 @@ GLScene::GLScene(int argc, char* argv[])
 	
 
 
-	teapot = new Cube(1.0f, 1.0f, 1.0f, true, true, false, 0.009f);
+	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 0.1f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -98,6 +98,7 @@ GLScene::GLScene(int argc, char* argv[])
 void GLScene::Display() 
 {
 	//Clear Image
+	glClearColor(0.0f, 0.1f, 0.5f, 1.0f); // Set background Color
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//for (int i = 0; i < 200; i++)
 	//	cube[i]->Draw();
