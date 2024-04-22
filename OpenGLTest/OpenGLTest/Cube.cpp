@@ -56,7 +56,7 @@ void Cube::Draw()
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
 		glTranslatef(0.0f, -2.5f, 0.0f);
-		glRotatef(45, 0.0f, 1.0f, 0.0f);
+		glRotatef(m_rotation * 10, 0.0f, 1.0f, 0.0f);
 		glRotatef(sinf(m_rotation)*20, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, indices);
 		glPopMatrix();
@@ -64,7 +64,7 @@ void Cube::Draw()
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 	}
-}//
+}
 
 void Cube::Update() 
 {
