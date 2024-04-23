@@ -5,89 +5,10 @@
 //GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
 {	
-	//camera init
-	camera = new Camera();
-
-	//Cube::LoadTXT((char*)"cube.txt");
-	//load cubes
-	Cube::LoadOBJ((char*)"teapot.obj");
-	//Cube::LoadTXT((char*)"cube.txt");
-
-	//make cube(s)
-	//srand(time(NULL));
-	//for(int i = 0; i < 200; i++)
-	//	cube[i] = new Cube(
-	//	(rand() % (20 - -20 + 1)) + -20.0f,
-	//		(rand() % (20 - -20 + 1)) + -20.0f,
-	//		(rand() % (20 - -20 + 1)) + -20.0f,
-	//		(bool)(rand() % 2),
-	//		(bool)(rand() % 2),
-	//		(bool)(rand() % 2),
-	//		(rand() % (5 - -5 + 1)) + -5.0f);
-	
-
-
-	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 0.1f);
-
-	camera->eye.x = 0.0f;
-	camera->eye.y = 0.0f;
-	camera->eye.z = -20.0f;
-	//camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;//Temp
-
-	camera->center.x = 0.0f;
-	camera->center.y = 0.0f;
-	camera->center.z = 0.0f;
-
-	camera->up.x = 0.0f;
-	camera->up.y = 1.0f;
-	camera->up.z = 0.0f;
-
-	//callback game scene init
-	GLUTCallbacks::Init(this);
-	
-	//glut init
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(800, 800);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Teapot Rotator Simulator");
-
-	
-
-	
-	//glut callback settings
-	glutDisplayFunc(GLUTCallbacks::Display);
-	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
-	glutKeyboardFunc(GLUTCallbacks::Keyboard);
-
-
-
-	//set matrix mode
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	//set viewport to be entire window
-	glViewport(0, 0, 800, 800);
-
-	//enable Depth Testing
-	glEnable(GL_DEPTH_TEST);
-	//set correct perspective
-	gluPerspective(45, 1, 0.1f, 1000); //ZNEAR MUST BE NON ZERO
-
-	
-
-	//set matrixmode back to modelview
-	glMatrixMode(GL_MODELVIEW);
 	
 	
-	
-
-	//enable backface culling
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-
-	
-
-	
+	InitGL(argc, argv);
+	InitObjects();
 
 	//call glut main loop
 	glutMainLoop();
@@ -163,13 +84,96 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		break;
 	default:
 		break;
-		
-
-
 	}
 
 
 
+}
+
+void GLScene::InitObjects() 
+{
+	//camera init
+	camera = new Camera();
+
+	//Cube::LoadTXT((char*)"cube.txt");
+	//load cubes
+	Cube::LoadOBJ((char*)"cow.obj");
+	//Cube::LoadTXT((char*)"cube.txt");
+
+	//make cube(s)
+	//srand(time(NULL));
+	//for(int i = 0; i < 200; i++)
+	//	cube[i] = new Cube(
+	//	(rand() % (20 - -20 + 1)) + -20.0f,
+	//		(rand() % (20 - -20 + 1)) + -20.0f,
+	//		(rand() % (20 - -20 + 1)) + -20.0f,
+	//		(bool)(rand() % 2),
+	//		(bool)(rand() % 2),
+	//		(bool)(rand() % 2),
+	//		(rand() % (5 - -5 + 1)) + -5.0f);
+
+
+
+	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 0.1f);
+
+	camera->eye.x = 0.0f;
+	camera->eye.y = 0.0f;
+	camera->eye.z = -20.0f;
+	//camera->eye.x = 5.0f; camera->eye.y = 5.0f; camera->eye.z = -5.0f;//Temp
+
+	camera->center.x = 0.0f;
+	camera->center.y = 0.0f;
+	camera->center.z = 0.0f;
+
+	camera->up.x = 0.0f;
+	camera->up.y = 1.0f;
+	camera->up.z = 0.0f;
+}
+
+void GLScene::InitGL(int argc, char* argv[]) 
+{
+	//callback game scene init
+	GLUTCallbacks::Init(this);
+
+	//glut init
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitWindowSize(800, 800);
+	glutInitWindowPosition(100, 100);
+	glutCreateWindow("Teapot Rotator Simulator");
+
+
+
+
+	//glut callback settings
+	glutDisplayFunc(GLUTCallbacks::Display);
+	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+
+
+
+	//set matrix mode
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//set viewport to be entire window
+	glViewport(0, 0, 800, 800);
+
+	//enable Depth Testing
+	glEnable(GL_DEPTH_TEST);
+	//set correct perspective
+	gluPerspective(45, 1, 0.1f, 1000); //ZNEAR MUST BE NON ZERO
+
+
+
+	//set matrixmode back to modelview
+	glMatrixMode(GL_MODELVIEW);
+
+
+
+
+	//enable backface culling
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 //Destructor

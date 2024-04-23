@@ -16,10 +16,7 @@
 class Cube
 {
 private:
-	static Vertex* indexedVertices;
-	static Color* indexedColors;
-	static GLushort* indices;
-	static int numVertices, numColors, numIndices;
+	Mesh* m_mesh;
 
 
 	Vector3 m_position;
@@ -33,7 +30,7 @@ private:
 	bool m_zActive;
 
 public:
-	Cube(float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
+	Cube(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
 	~Cube();
 
 	void SetRotation(float rotation);

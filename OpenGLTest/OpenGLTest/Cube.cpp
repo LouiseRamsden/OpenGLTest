@@ -4,21 +4,9 @@
 #include <sstream>
 
 
-Vertex* Cube::indexedVertices = nullptr;
-
-Color* Cube::indexedColors = new Color[1];
-
-GLushort* Cube::indices = nullptr;
-
-int Cube::numVertices = 0;
-
-int Cube::numColors = 0;
-
-int Cube::numIndices = 0;
-
-Cube::Cube(float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) 
+Cube::Cube(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) 
 {
-
+	m_mesh = mesh;
 	m_xActive = xRot;
 	m_yActive = yRot;
 	m_zActive = zRot;
@@ -45,20 +33,20 @@ void Cube::SetRotation(float rotation)
 
 void Cube::Draw()
 {
-	if (indexedVertices != nullptr && indexedColors != nullptr && indices != nullptr) 
+	if (m_mesh->Vertices != nullptr && m_mesh->Colors != nullptr && m_mesh->Indices != nullptr) 
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 
-		glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
-		glColorPointer(3, GL_FLOAT, 0, indexedColors);
+		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
+		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
 		glTranslatef(0.0f, -2.5f, 0.0f);
 		glRotatef(m_rotation * 10, 0.0f, 1.0f, 0.0f);
 		glRotatef(sinf(m_rotation)*20, (float)m_xActive, (float)m_yActive, (float)m_zActive);
-		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, indices);
+		glDrawElements(GL_TRIANGLES, m_mesh->IndexCount, GL_UNSIGNED_SHORT, m_mesh->Indices);
 		glPopMatrix();
 
 		glDisableClientState(GL_VERTEX_ARRAY);

@@ -24,6 +24,10 @@ public:
 
 	void Keyboard(unsigned char key, int x, int y);
 
+	void InitObjects();
+
+	void InitGL(int argc, char* argv[]);
+
 	~GLScene(void);
 private:
 	Camera* camera;
