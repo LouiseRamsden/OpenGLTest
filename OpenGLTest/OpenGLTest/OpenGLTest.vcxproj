@@ -129,14 +129,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Cube.h" />
+    <ClInclude Include="StaticMesh.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="GLScene.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="Structs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="GLUTCallbacks.cpp" />
     <ClCompile Include="GLScene.cpp" />
     <ClCompile Include="main.cpp" />

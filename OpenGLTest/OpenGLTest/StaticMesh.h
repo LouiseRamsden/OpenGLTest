@@ -13,7 +13,7 @@
 #include <string>
 #include <string.h>
 
-class Cube
+class StaticMesh
 {
 private:
 	Mesh* m_mesh;
@@ -30,15 +30,11 @@ private:
 	bool m_zActive;
 
 public:
-	Cube(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
-	~Cube();
+	StaticMesh(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
+	~StaticMesh();
 
 	void SetRotation(float rotation);
 	void Draw();
 	void Update();
-
-	static bool LoadTXT(char* path);
-
-	static bool LoadOBJ(char* path);
 };
 

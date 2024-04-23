@@ -5,7 +5,7 @@
 #include <gl/GLU.h>
 #include "GL\freeglut.h"
 #include "GLUTCallbacks.h"
-#include "Cube.h"
+#include "StaticMesh.h"
 
 #include "Structs.h"
 
@@ -31,7 +31,6 @@ public:
 	~GLScene(void);
 private:
 	Camera* camera;
-	Cube* cube[200];
-	Cube* teapot;
+	StaticMesh* m_currentSMesh;
 };
 

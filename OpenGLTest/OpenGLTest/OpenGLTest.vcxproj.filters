@@ -24,7 +24,7 @@
     <ClInclude Include="Structs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h">
+    <ClInclude Include="StaticMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MeshLoader.h">
@@ -41,7 +41,7 @@
     <ClCompile Include="GLUTCallbacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Cube.cpp">
+    <ClCompile Include="StaticMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MeshLoader.cpp">

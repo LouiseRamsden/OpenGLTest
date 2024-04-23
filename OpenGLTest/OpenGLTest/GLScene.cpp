@@ -1,5 +1,7 @@
 #include "GLScene.h"
 
+#include "MeshLoader.h"
+
 #include <time.h>
 
 //GLScene Constructor containing all GLUT init functions
@@ -25,7 +27,7 @@ void GLScene::Display()
 	//	cube[i]->Draw();
 	// 
 	// 
-	teapot->Draw();
+	m_currentSMesh->Draw();
 	// 
 	// 
 	//Flush GPU
@@ -53,7 +55,7 @@ void GLScene::Update()
 	//	cube[i]->Update();
 	// 
 	// 
-	teapot->Update();
+	m_currentSMesh->Update();
 	//
 
 
@@ -97,7 +99,7 @@ void GLScene::InitObjects()
 
 	//Cube::LoadTXT((char*)"cube.txt");
 	//load cubes
-	Cube::LoadOBJ((char*)"cow.obj");
+	Mesh* cowMesh = MeshLoader::Load((char*)"cow.obj");
 	//Cube::LoadTXT((char*)"cube.txt");
 
 	//make cube(s)
@@ -114,7 +116,7 @@ void GLScene::InitObjects()
 
 
 
-	teapot = new Cube(1.0f, 1.0f, 1.0f, true, false, false, 0.1f);
+	m_currentSMesh = new StaticMesh(cowMesh,1.0f, 1.0f, 1.0f, true, false, false, 0.1f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -140,7 +142,7 @@ void GLScene::InitGL(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Teapot Rotator Simulator");
+	glutCreateWindow("Object Rotation Simulator");
 
 
 
