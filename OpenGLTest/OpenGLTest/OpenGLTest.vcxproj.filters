@@ -24,10 +24,16 @@
     <ClInclude Include="Structs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StaticMesh.h">
+    <ClInclude Include="CowObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MeshLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TeapotObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,10 +47,16 @@
     <ClCompile Include="GLUTCallbacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StaticMesh.cpp">
+    <ClCompile Include="CowObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MeshLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TeapotObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

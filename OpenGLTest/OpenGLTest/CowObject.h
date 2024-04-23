@@ -5,18 +5,13 @@
 #include <gl/GLU.h>
 
 #include "GL/freeglut.h"
+#include "SceneObject.h"
 #include "Structs.h"
 
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <string.h>
 
-class StaticMesh
+class CowObject : public SceneObject
 {
 private:
-	Mesh* m_mesh;
 
 
 	Vector3 m_position;
@@ -30,11 +25,11 @@ private:
 	bool m_zActive;
 
 public:
-	StaticMesh(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
-	~StaticMesh();
+	CowObject(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
+	~CowObject();
 
 	void SetRotation(float rotation);
-	void Draw();
-	void Update();
+	void Draw() override;
+	void Update() override;
 };
 

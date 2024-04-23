@@ -129,18 +129,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="StaticMesh.h" />
+    <ClInclude Include="CowObject.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="GLScene.h" />
     <ClInclude Include="MeshLoader.h" />
+    <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="TeapotObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StaticMesh.cpp" />
+    <ClCompile Include="CowObject.cpp" />
     <ClCompile Include="GLUTCallbacks.cpp" />
     <ClCompile Include="GLScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="SceneObject.cpp" />
+    <ClCompile Include="TeapotObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,12 +5,14 @@
 #include <gl/GLU.h>
 #include "GL\freeglut.h"
 #include "GLUTCallbacks.h"
-#include "StaticMesh.h"
+#include "CowObject.h"
+#include "TeapotObject.h"
 
 #include "Structs.h"
 
 #define REFRESH_RATE 16
 
+#define NUM_OBJECTS
 
 
 class GLScene
@@ -31,6 +33,6 @@ public:
 	~GLScene(void);
 private:
 	Camera* camera;
-	StaticMesh* m_currentSMesh;
+	SceneObject* m_objects[100];
 };
 

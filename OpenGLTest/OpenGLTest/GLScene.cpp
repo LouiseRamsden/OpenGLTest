@@ -3,6 +3,7 @@
 #include "MeshLoader.h"
 
 #include <time.h>
+#include <random>
 
 //GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
@@ -23,11 +24,10 @@ void GLScene::Display()
 	//Clear Image
 	glClearColor(0.0f, 0.1f, 0.5f, 1.0f); // Set background Color
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//for (int i = 0; i < 200; i++)
-	//	cube[i]->Draw();
-	// 
-	// 
-	m_currentSMesh->Draw();
+
+	for (int i = 0; i < 100; i++)
+		m_objects[i]->Draw();
+	
 	// 
 	// 
 	//Flush GPU
@@ -51,11 +51,9 @@ void GLScene::Update()
 		camera->up.y,
 		camera->up.z);
 
-	//for (int i = 0; i < 200; i++)
-	//	cube[i]->Update();
-	// 
-	// 
-	m_currentSMesh->Update();
+	for (int i = 0; i < 100; i++)
+		m_objects[i]->Update();
+	
 	//
 
 
@@ -100,23 +98,32 @@ void GLScene::InitObjects()
 	//Cube::LoadTXT((char*)"cube.txt");
 	//load cubes
 	Mesh* cowMesh = MeshLoader::Load((char*)"cow.obj");
+	Mesh* teapotMesh = MeshLoader::Load((char*)"teapot.obj");
 	//Cube::LoadTXT((char*)"cube.txt");
 
 	//make cube(s)
-	//srand(time(NULL));
-	//for(int i = 0; i < 200; i++)
-	//	cube[i] = new Cube(
-	//	(rand() % (20 - -20 + 1)) + -20.0f,
-	//		(rand() % (20 - -20 + 1)) + -20.0f,
-	//		(rand() % (20 - -20 + 1)) + -20.0f,
-	//		(bool)(rand() % 2),
-	//		(bool)(rand() % 2),
-	//		(bool)(rand() % 2),
-	//		(rand() % (5 - -5 + 1)) + -5.0f);
+	srand(time(NULL));
+	for(int i = 0; i < 50; i++)
+		m_objects[i] = new CowObject(
+			cowMesh,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			false,
+			false,
+			false,
+			0.1f);
 
-
-
-	m_currentSMesh = new StaticMesh(cowMesh,1.0f, 1.0f, 1.0f, true, false, false, 0.1f);
+	for(int i = 50; i < 100; i++)
+		m_objects[i] = new TeapotObject(
+			teapotMesh,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(rand() % (20 - -20 + 1)) + -20.0f,
+			(bool)(rand() % 2),
+			(bool)(rand() % 2),
+			(bool)(rand() % 2),
+			0.1f);
 
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;

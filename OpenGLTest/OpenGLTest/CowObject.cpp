@@ -1,12 +1,11 @@
 
-#include "StaticMesh.h"
+#include "CowObject.h"
 
 #include <sstream>
 
 
-StaticMesh::StaticMesh(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed)
+CowObject::CowObject(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh)
 {
-	m_mesh = mesh;
 	m_xActive = xRot;
 	m_yActive = yRot;
 	m_zActive = zRot;
@@ -20,18 +19,18 @@ StaticMesh::StaticMesh(Mesh* mesh, float x, float y, float z, bool xRot, bool yR
 
 		
 }
-StaticMesh::~StaticMesh()
+CowObject::~CowObject()
 {
 
 }
 
-void StaticMesh::SetRotation(float rotation)
+void CowObject::SetRotation(float rotation)
 {
 	m_rotation = rotation;
 	
 }
 
-void StaticMesh::Draw()
+void CowObject::Draw()
 {
 	if (m_mesh->Vertices != nullptr && m_mesh->Colors != nullptr && m_mesh->Indices != nullptr) 
 	{
@@ -43,9 +42,9 @@ void StaticMesh::Draw()
 
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
-		glTranslatef(0.0f, -2.5f, 0.0f);
+		glTranslatef(m_position.x, m_position.y, m_position.z);
 		glRotatef(m_rotation * 10, 0.0f, 1.0f, 0.0f);
-		glRotatef(sinf(m_rotation)*20, (float)m_xActive, (float)m_yActive, (float)m_zActive);
+		glRotatef(sinf(m_rotation)*50, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 		glDrawElements(GL_TRIANGLES, m_mesh->IndexCount, GL_UNSIGNED_SHORT, m_mesh->Indices);
 		glPopMatrix();
 
@@ -54,7 +53,7 @@ void StaticMesh::Draw()
 	}
 }
 
-void StaticMesh::Update()
+void CowObject::Update()
 {
 	m_rotation += m_rotSpeed;
 	if (m_rotation > 360.0f)
