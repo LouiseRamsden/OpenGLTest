@@ -136,6 +136,7 @@
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TeapotObject.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CowObject.cpp" />

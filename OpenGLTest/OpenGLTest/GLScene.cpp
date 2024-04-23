@@ -1,6 +1,7 @@
 #include "GLScene.h"
 
 #include "MeshLoader.h"
+#include "Utils.h"
 
 #include <time.h>
 #include <random>
@@ -103,12 +104,12 @@ void GLScene::InitObjects()
 
 	//make cube(s)
 	srand(time(NULL));
-	for(int i = 0; i < 50; i++)
+	for (int i = 0; i < 50; i++)
 		m_objects[i] = new CowObject(
 			cowMesh,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(rand() % (20 - -20 + 1)) + -20.0f,
+			RAND_IN_RANGE(50, -50),
+			RAND_IN_RANGE(50, -50),
+			RAND_IN_RANGE(50, -50),
 			false,
 			false,
 			false,
