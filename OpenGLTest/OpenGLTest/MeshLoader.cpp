@@ -63,6 +63,7 @@ namespace MeshLoader
 		std::string input;
 		bool vertMode = false;
 		bool indexMode = false;
+		bool texCoordMode = false;
 		int lineNum = 0;
 		for (std::string line; std::getline(inFile, line, '\n');)
 		{
@@ -90,25 +91,52 @@ namespace MeshLoader
 				}
 				if (indexMode == true)
 				{
-					if (token != "f" || token != "#")
+					std::istringstream b;
+					b.str(token);
+					uint8_t tokenCount = 0;
+					for (std::string indexToken; std::getline(b, indexToken, '/');)
 					{
-						tempIndices[mesh->IndexCount - 3 + lineNum] = (GLushort)stoi(token);
-						lineNum++;
+						switch(tokenCount)
+						{
+						case 0:
+							tempIndices[mesh->IndexCount - 3 + lineNum] = (GLushort)stoi(token);
+							tokenCount++;
+							break;
+						case 1:
+							tokenCount++;
+							break;
+						default:
+							break;
+						}
+						
 					}
+					lineNum++;
+						
 
 				}
 				if (token == "v")
 				{
 					vertMode = true;
 					indexMode = false;
+					texCoordMode = false;
 					tempVertices.push_back({ 0,0,0 });
 					mesh->VertexCount++;
 					lineNum = 0;
+				}
+				if (token == "vt")
+				{
+					texCoordMode = true;
+					vertMode = false;
+					indexMode = false;
+
+					lineNum = 0;
+
 				}
 				if (token == "f")
 				{
 					indexMode = true;
 					vertMode = false;
+					texCoordMode = false;
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
@@ -122,12 +150,17 @@ namespace MeshLoader
 			}
 			indexMode = false;
 			vertMode = false;
+			texCoordMode = false;
 		}
 		mesh->ColorCount = mesh->VertexCount;
 
 		LoadVertices(tempVertices, *mesh);
 		LoadColors(tempVertices, *mesh);
 		LoadIndices(tempIndices, *mesh);
+		//Load TexCoords
+		//Load Tex Indices
+		//Load TexNormals
+		//Load Normal Indices
 
 		return mesh;
 	}
