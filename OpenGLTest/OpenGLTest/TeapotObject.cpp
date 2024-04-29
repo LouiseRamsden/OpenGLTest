@@ -1,7 +1,7 @@
 #include "TeapotObject.h"
 
 
-TeapotObject::TeapotObject(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh) 
+TeapotObject::TeapotObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
 {
 	m_xActive = xRot;
 	m_yActive = yRot;

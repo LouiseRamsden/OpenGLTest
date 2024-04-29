@@ -102,28 +102,21 @@ void GLScene::InitObjects()
 	Mesh* teapotMesh = MeshLoader::Load((char*)"teapot.obj");
 	//Cube::LoadTXT((char*)"cube.txt");
 
+	Texture2D* texture = new Texture2D();
+	texture->Load((char*)"penguins.raw", 512, 512);
+
 	//make cube(s)
 	srand(time(NULL));
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 100; i++)
 		m_objects[i] = new CowObject(
 			cowMesh,
+			texture,
 			RAND_IN_RANGE(50, -50),
 			RAND_IN_RANGE(50, -50),
 			RAND_IN_RANGE(50, -50),
 			false,
 			false,
 			false,
-			0.1f);
-
-	for(int i = 50; i < 100; i++)
-		m_objects[i] = new TeapotObject(
-			teapotMesh,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(rand() % (20 - -20 + 1)) + -20.0f,
-			(bool)(rand() % 2),
-			(bool)(rand() % 2),
-			(bool)(rand() % 2),
 			0.1f);
 
 	camera->eye.x = 0.0f;
@@ -167,6 +160,9 @@ void GLScene::InitGL(int argc, char* argv[])
 	glLoadIdentity();
 	//set viewport to be entire window
 	glViewport(0, 0, 800, 800);
+
+	//
+	glEnable(GL_TEXTURE_2D);
 
 	//enable Depth Testing
 	glEnable(GL_DEPTH_TEST);

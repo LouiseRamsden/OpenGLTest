@@ -47,6 +47,8 @@ struct Mesh
 	Vertex* Vertices;
 	Color* Colors;
 	GLushort* Indices;
-	int VertexCount, ColorCount, IndexCount;
+	TexCoord* TexCoords;
+	GLushort* TexCoordIndices;
+	int VertexCount, ColorCount, IndexCount, TexCoordsCount, TexCoordIndexCount;
 };
 

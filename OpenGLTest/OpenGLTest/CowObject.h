@@ -25,7 +25,7 @@ private:
 	bool m_zActive;
 
 public:
-	CowObject(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
+	CowObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
 	~CowObject();
 
 	void SetRotation(float rotation);

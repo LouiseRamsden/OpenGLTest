@@ -45,6 +45,15 @@ namespace MeshLoader
 			mesh.Indices[i] = tempIndices[i] - 1;
 		}
 	}
+	void LoadTexCoords(std::vector<TexCoord>tempTexCoords, Mesh& mesh) 
+	{
+		mesh.TexCoords = new TexCoord[mesh.TexCoordsCount];
+		for (int i = 0; i < mesh.TexCoordsCount; i++)
+		{
+			mesh.TexCoords[i].u = tempTexCoords[i].u;
+			mesh.TexCoords[i].v = tempTexCoords[i].v;
+		}
+	}
 
 	Mesh* MeshLoader::Load(char* path)
 	{
@@ -60,11 +69,18 @@ namespace MeshLoader
 
 		std::vector<GLushort> tempIndices;
 		std::vector<Vertex> tempVertices;
+		std::vector<TexCoord> tempTexCoords;
+		std::vector<GLushort> tempTexCoordindices;
 		std::string input;
+		
 		bool vertMode = false;
 		bool indexMode = false;
 		bool texCoordMode = false;
+		
 		int lineNum = 0;
+
+		bool texIndicesInFile = false;
+
 		for (std::string line; std::getline(inFile, line, '\n');)
 		{
 
@@ -74,7 +90,7 @@ namespace MeshLoader
 			{
 				if (vertMode == true)
 				{
-					switch (lineNum)
+					switch(lineNum)
 					{
 					case 0:
 						tempVertices[mesh->VertexCount - 1].x = (GLfloat)stof(token);
@@ -88,6 +104,19 @@ namespace MeshLoader
 					}
 					lineNum++;
 
+				}
+				if (texCoordMode == true) 
+				{
+					switch (lineNum)
+					{
+					case 0:
+						tempTexCoords[mesh->TexCoordsCount - 1].u = (GLfloat)stof(token);
+						break;
+					case 1:
+						tempTexCoords[mesh->TexCoordsCount - 1].v = (GLfloat)stof(token);
+						break;
+					}
+					lineNum++;
 				}
 				if (indexMode == true)
 				{
@@ -103,6 +132,7 @@ namespace MeshLoader
 							tokenCount++;
 							break;
 						case 1:
+							tempTexCoordindices[mesh->TexCoordIndexCount - 3 + lineNum] = (GLushort)stoi(token);
 							tokenCount++;
 							break;
 						default:
@@ -128,7 +158,8 @@ namespace MeshLoader
 					texCoordMode = true;
 					vertMode = false;
 					indexMode = false;
-
+					tempTexCoords.push_back({ 0,0 });
+					mesh->TexCoordsCount++;
 					lineNum = 0;
 
 				}
@@ -140,7 +171,11 @@ namespace MeshLoader
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
+					tempTexCoordindices.push_back(0);
+					tempTexCoordindices.push_back(0);
+					tempTexCoordindices.push_back(0);
 					mesh->IndexCount += 3;
+					mesh->TexCoordIndexCount += 3;
 					lineNum = 0;
 				}
 
@@ -153,11 +188,15 @@ namespace MeshLoader
 			texCoordMode = false;
 		}
 		mesh->ColorCount = mesh->VertexCount;
+		
+		std::cout << mesh->TexCoordIndexCount << "\n";
+		std::cout << mesh->TexCoordsCount << "\n";
+	
 
 		LoadVertices(tempVertices, *mesh);
 		LoadColors(tempVertices, *mesh);
 		LoadIndices(tempIndices, *mesh);
-		//Load TexCoords
+		LoadTexCoords(tempTexCoords, *mesh);
 		//Load Tex Indices
 		//Load TexNormals
 		//Load Normal Indices

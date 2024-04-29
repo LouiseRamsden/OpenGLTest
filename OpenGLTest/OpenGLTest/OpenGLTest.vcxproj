@@ -136,6 +136,7 @@
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="TeapotObject.h" />
+    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="TeapotObject.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

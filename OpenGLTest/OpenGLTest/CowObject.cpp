@@ -4,7 +4,7 @@
 #include <sstream>
 
 
-CowObject::CowObject(Mesh* mesh, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh)
+CowObject::CowObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
 {
 	m_xActive = xRot;
 	m_yActive = yRot;
@@ -34,9 +34,13 @@ void CowObject::Draw()
 {
 	if (m_mesh->Vertices != nullptr && m_mesh->Colors != nullptr && m_mesh->Indices != nullptr) 
 	{
+		glBindTexture(GL_TEXTURE_2D, m_texture->GetID());
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
-
+		
+		glTexCoordPointer(2, GL_FLOAT, 0, m_mesh->TexCoords);
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
 		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
@@ -48,8 +52,10 @@ void CowObject::Draw()
 		glDrawElements(GL_TRIANGLES, m_mesh->IndexCount, GL_UNSIGNED_SHORT, m_mesh->Indices);
 		glPopMatrix();
 
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
+		
 	}
 }
 
