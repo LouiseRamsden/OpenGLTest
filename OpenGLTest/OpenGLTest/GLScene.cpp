@@ -111,12 +111,12 @@ void GLScene::InitObjects()
 		m_objects[i] = new CowObject(
 			cowMesh,
 			texture,
-			RAND_IN_RANGE(50, -50),
-			RAND_IN_RANGE(50, -50),
-			RAND_IN_RANGE(50, -50),
+			RAND_IN_RANGE(15, -15),
+			RAND_IN_RANGE(15, -15),
+			RAND_IN_RANGE(15, -15),
+			true,
 			false,
-			false,
-			false,
+			true,
 			0.1f);
 
 	camera->eye.x = 0.0f;

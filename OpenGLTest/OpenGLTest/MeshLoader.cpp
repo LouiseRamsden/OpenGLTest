@@ -30,9 +30,9 @@ namespace MeshLoader
 
 		for (int i = 0; i < mesh.ColorCount; i++)
 		{
-			mesh.Colors[i].r = mesh.Vertices[i].x;
-			mesh.Colors[i].g = mesh.Vertices[i].y;
-			mesh.Colors[i].b = mesh.Vertices[i].z;
+			mesh.Colors[i].r = 1.0f;//mesh.Vertices[i].x;
+			mesh.Colors[i].g = 1.0f;//mesh.Vertices[i].y;
+			mesh.Colors[i].b = 1.0f;//mesh.Vertices[i].z;
 		}
 	}
 
