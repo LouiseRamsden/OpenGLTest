@@ -98,7 +98,7 @@ void GLScene::InitObjects()
 
 	//Cube::LoadTXT((char*)"cube.txt");
 	//load cubes
-	Mesh* cowMesh = MeshLoader::Load((char*)"cube2.obj");
+	Mesh* cowMesh = MeshLoader::Load((char*)"cubeTexturable.obj");
 	Mesh* teapotMesh = MeshLoader::Load((char*)"teapot.obj");
 	//Cube::LoadTXT((char*)"cube.txt");
 
