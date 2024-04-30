@@ -23,13 +23,13 @@ TeapotObject::~TeapotObject()
 
 void TeapotObject::Draw() 
 {
-	if (m_mesh->Vertices != nullptr && m_mesh->Colors != nullptr && m_mesh->Indices != nullptr)
+	if (m_mesh->Vertices != nullptr && m_mesh->Normals != nullptr && m_mesh->Indices != nullptr)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
+		//glEnableClientState(GL_COLOR_ARRAY);
 
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
-		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
+		//glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);

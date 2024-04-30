@@ -13,7 +13,7 @@ GLScene::GLScene(int argc, char* argv[])
 	
 	InitGL(argc, argv);
 	InitObjects();
-
+	InitLighting();
 	//call glut main loop
 	glutMainLoop();
 	
@@ -51,6 +51,12 @@ void GLScene::Update()
 		camera->up.x,
 		camera->up.y,
 		camera->up.z);
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &(m_lightData->Ambient.x));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(m_lightData->Diffuse.x));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, &(m_lightData->Specular.x));
+
+	glLightfv(GL_LIGHT0, GL_POSITION, &(m_lightPosition->x));
 
 	for (int i = 0; i < 100; i++)
 		m_objects[i]->Update();
@@ -133,6 +139,30 @@ void GLScene::InitObjects()
 	camera->up.z = 0.0f;
 }
 
+void GLScene::InitLighting() 
+{
+	m_lightPosition = new Vector4();
+	m_lightPosition->x = 0.0;
+	m_lightPosition->y = 1.0;
+	m_lightPosition->z = 0.0;
+	m_lightPosition->w = 0.0;
+
+	m_lightData = new Lighting();
+	m_lightData->Ambient.x = 0.2;
+	m_lightData->Ambient.y = 0.2;
+	m_lightData->Ambient.z = 0.2;
+	m_lightData->Ambient.w = 1.0;
+	m_lightData->Diffuse.x = 0.8;
+	m_lightData->Diffuse.y = 0.8;
+	m_lightData->Diffuse.z = 0.8;
+	m_lightData->Diffuse.w = 1.0;
+	m_lightData->Specular.x = 0.2;
+	m_lightData->Specular.y = 0.2;
+	m_lightData->Specular.z = 0.2;
+	m_lightData->Specular.w = 1.0;
+
+}
+
 void GLScene::InitGL(int argc, char* argv[]) 
 {
 	//callback game scene init
@@ -180,6 +210,9 @@ void GLScene::InitGL(int argc, char* argv[])
 	//enable backface culling
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 }
 
 //Destructor

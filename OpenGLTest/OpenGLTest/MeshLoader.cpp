@@ -9,7 +9,7 @@
 namespace MeshLoader
 {
 	void LoadVertices(std::vector<Vertex> tempVertices, Mesh& mesh);
-	void LoadColors(std::vector<Vertex> tempVertices, Mesh& mesh);
+	void LoadNormals(std::vector<Vector3> tempVertices, Mesh& mesh);
 	void LoadIndices(std::vector<GLushort> tempIndices, Mesh& mesh);
 
 	void LoadVertices(std::vector<Vertex> tempVertices, Mesh& mesh)
@@ -24,15 +24,15 @@ namespace MeshLoader
 		}
 	}
 
-	void LoadColors(std::vector<Vertex> tempVertices, Mesh& mesh)
+	void LoadNormals(std::vector<Vector3> tempNormals, Mesh& mesh)
 	{
-		mesh.Colors = new Color[mesh.ColorCount];
+		mesh.Normals = new Vector3[mesh.NormalCount];
 
-		for (int i = 0; i < mesh.ColorCount; i++)
+		for (int i = 0; i < mesh.NormalCount; i++)
 		{
-			mesh.Colors[i].r = 1.0f;//mesh.Vertices[i].x;
-			mesh.Colors[i].g = 1.0f;//mesh.Vertices[i].y;
-			mesh.Colors[i].b = 1.0f;//mesh.Vertices[i].z;
+			mesh.Normals[i].x = tempNormals[i].x;
+			mesh.Normals[i].y = tempNormals[i].y;
+			mesh.Normals[i].z = tempNormals[i].z;
 		}
 	}
 
@@ -71,12 +71,14 @@ namespace MeshLoader
 		std::vector<Vertex> tempVertices;
 		std::vector<TexCoord> tempTexCoords;
 		std::vector<GLushort> tempTexCoordindices;
+		std::vector<Vector3> tempNormals;
 		std::string input;
-		
+
 		bool vertMode = false;
 		bool indexMode = false;
 		bool texCoordMode = false;
-		
+		bool normalMode = false;
+
 		int lineNum = 0;
 
 		bool texIndicesInFile = false;
@@ -90,7 +92,7 @@ namespace MeshLoader
 			{
 				if (vertMode == true)
 				{
-					switch(lineNum)
+					switch (lineNum)
 					{
 					case 0:
 						tempVertices[mesh->VertexCount - 1].x = (GLfloat)stof(token);
@@ -105,7 +107,7 @@ namespace MeshLoader
 					lineNum++;
 
 				}
-				if (texCoordMode == true) 
+				if (texCoordMode == true)
 				{
 					switch (lineNum)
 					{
@@ -118,6 +120,22 @@ namespace MeshLoader
 					}
 					lineNum++;
 				}
+				if (normalMode == true)
+				{
+					switch (lineNum)
+					{
+					case 0:
+						tempNormals[mesh->NormalCount - 1].x = (GLfloat)stof(token);
+						break;
+					case 1:
+						tempNormals[mesh->NormalCount - 1].y = (GLfloat)stof(token);
+						break;
+					case 2:
+						tempNormals[mesh->NormalCount - 1].z = (GLfloat)stof(token);
+						break;
+					}
+					lineNum++;
+				}
 				if (indexMode == true)
 				{
 					std::istringstream b;
@@ -125,7 +143,7 @@ namespace MeshLoader
 					uint8_t tokenCount = 0;
 					for (std::string indexToken; std::getline(b, indexToken, '/');)
 					{
-						switch(tokenCount)
+						switch (tokenCount)
 						{
 						case 0:
 							tempIndices[mesh->IndexCount - 3 + lineNum] = (GLushort)stoi(token);
@@ -138,10 +156,10 @@ namespace MeshLoader
 						default:
 							break;
 						}
-						
+
 					}
 					lineNum++;
-						
+
 
 				}
 				if (token == "v")
@@ -149,6 +167,7 @@ namespace MeshLoader
 					vertMode = true;
 					indexMode = false;
 					texCoordMode = false;
+					normalMode = false;
 					tempVertices.push_back({ 0,0,0 });
 					mesh->VertexCount++;
 					lineNum = 0;
@@ -158,8 +177,20 @@ namespace MeshLoader
 					texCoordMode = true;
 					vertMode = false;
 					indexMode = false;
+					normalMode = false;
 					tempTexCoords.push_back({ 0,0 });
 					mesh->TexCoordsCount++;
+					lineNum = 0;
+
+				}
+				if (token == "vn")
+				{
+					indexMode = false;
+					vertMode = false;
+					texCoordMode = false;
+					normalMode = true;
+					tempNormals.push_back({ 0,0,0 });
+					mesh->NormalCount++;
 					lineNum = 0;
 
 				}
@@ -168,6 +199,7 @@ namespace MeshLoader
 					indexMode = true;
 					vertMode = false;
 					texCoordMode = false;
+					normalMode = false;
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
@@ -178,23 +210,29 @@ namespace MeshLoader
 					mesh->TexCoordIndexCount += 3;
 					lineNum = 0;
 				}
-
-
-
-
 			}
 			indexMode = false;
 			vertMode = false;
 			texCoordMode = false;
+			normalMode = false;
+
 		}
-		mesh->ColorCount = mesh->VertexCount;
-		
+
+		for (int i = 0; i < mesh->NormalCount; i++)
+		{
+			std::cout << tempNormals[i].x;
+			std::cout << tempNormals[i].y;
+			std::cout << tempNormals[i].z;
+			std::cout << "\n";
+		}
+		std::cout << "Normal Count: " << mesh->NormalCount;
+
 		std::cout << mesh->TexCoordIndexCount << "\n";
 		std::cout << mesh->TexCoordsCount << "\n";
 	
 
 		LoadVertices(tempVertices, *mesh);
-		LoadColors(tempVertices, *mesh);
+		LoadNormals(tempNormals, *mesh);
 		LoadIndices(tempIndices, *mesh);
 		LoadTexCoords(tempTexCoords, *mesh);
 		//Load Tex Indices

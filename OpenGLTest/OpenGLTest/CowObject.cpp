@@ -29,20 +29,43 @@ void CowObject::SetRotation(float rotation)
 	m_rotation = rotation;
 	
 }
+void CowObject::SetMaterial() 
+{
+	m_material = new Material();
+	m_material->Ambient.x = 0.8; m_material->Ambient.y = 0.8; m_material->Ambient.z = 0.9;
+	m_material->Ambient.w = 1.0;
+	m_material->Diffuse.x = 0.8; m_material->Diffuse.y = 0.8; m_material->Diffuse.z = 0.9;
+	m_material->Diffuse.w = 1.0;
+	m_material->Specular.x = 1.0; m_material->Specular.y = 1.0; m_material->Specular.z = 1.0;
+	m_material->Specular.w = 1.0;
+	m_material->Shininess = 100.0f;
 
+}
 void CowObject::Draw()
 {
-	if (m_mesh->Vertices != nullptr && m_mesh->Colors != nullptr && m_mesh->Indices != nullptr) 
+	if (m_mesh->Vertices != nullptr && m_mesh->Normals != nullptr && m_mesh->Indices != nullptr) 
 	{
+		
+
+		
+		
+		SetMaterial();
+		glMaterialfv(GL_FRONT, GL_AMBIENT, &(m_material->Ambient.x));
+		glMaterialfv(GL_FRONT, GL_SPECULAR, &(m_material->Specular.x));
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, &(m_material->Diffuse.x));
+		glMaterialfv(GL_FRONT, GL_SHININESS, &(m_material->Shininess));
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		//glEnableClientState(GL_COLOR_ARRAY);
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glNormalPointer(GL_FLOAT, 0, m_mesh->Normals);
+
 		glBindTexture(GL_TEXTURE_2D, m_texture->GetID());
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		
+
 		glTexCoordPointer(2, GL_FLOAT, 0, m_mesh->TexCoords);
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
-		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
+		//glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
@@ -54,7 +77,7 @@ void CowObject::Draw()
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 		
 	}
 }

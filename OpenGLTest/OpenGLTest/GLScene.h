@@ -28,11 +28,16 @@ public:
 
 	void InitObjects();
 
+	void InitLighting();
+
 	void InitGL(int argc, char* argv[]);
 
 	~GLScene(void);
 private:
 	Camera* camera;
 	SceneObject* m_objects[100];
+	Vector4* m_lightPosition;
+	Lighting* m_lightData;
+
 };
 

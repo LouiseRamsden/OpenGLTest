@@ -24,11 +24,14 @@ private:
 	bool m_yActive;
 	bool m_zActive;
 
+	Material* m_material;
+
 public:
 	CowObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
 	~CowObject();
 
 	void SetRotation(float rotation);
+	void SetMaterial();
 	void Draw() override;
 	void Update() override;
 };
