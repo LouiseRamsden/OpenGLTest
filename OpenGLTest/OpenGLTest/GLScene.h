@@ -32,6 +32,8 @@ public:
 
 	void InitGL(int argc, char* argv[]);
 
+	void DrawString(const char* text, Vector3* position, Color* color);
+
 	~GLScene(void);
 private:
 	Camera* camera;

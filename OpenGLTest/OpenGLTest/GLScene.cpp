@@ -5,6 +5,7 @@
 
 #include <time.h>
 #include <random>
+#include <string>
 
 //GLScene Constructor containing all GLUT init functions
 GLScene::GLScene(int argc, char* argv[]) 
@@ -22,12 +23,21 @@ GLScene::GLScene(int argc, char* argv[])
 //Display function, called continuously and draws screen
 void GLScene::Display() 
 {
+
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	//Clear Image
 	glClearColor(0.0f, 0.1f, 0.5f, 1.0f); // Set background Color
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 50; i++)
 		m_objects[i]->Draw();
+	
+	for (int i = 50; i < 100; i++)
+		m_objects[i]->Draw();
+
+	Vector3 v = { camera->center.x + 8.0f, camera->center.y + 7.5f, camera->center.z - 0.5f};
+	Color c = { 1.0f, 1.0f, 0.0f };
+	DrawString("Hello", &v, &c);
 	
 	// 
 	// 
@@ -58,9 +68,10 @@ void GLScene::Update()
 
 	glLightfv(GL_LIGHT0, GL_POSITION, &(m_lightPosition->x));
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 50; i++)
 		m_objects[i]->Update();
-	
+	for (int i = 50; i < 100; i++)
+		m_objects[i]->Update();
 	//
 
 
@@ -113,9 +124,20 @@ void GLScene::InitObjects()
 
 	//make cube(s)
 	srand(time(NULL));
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 50; i++)
 		m_objects[i] = new CowObject(
 			cowMesh,
+			texture,
+			RAND_IN_RANGE(15, -15),
+			RAND_IN_RANGE(15, -15),
+			RAND_IN_RANGE(15, -15),
+			true,
+			false,
+			true,
+			0.1f);
+	for (int i = 50; i < 100; i++)
+		m_objects[i] = new TeapotObject(
+			teapotMesh,
 			texture,
 			RAND_IN_RANGE(15, -15),
 			RAND_IN_RANGE(15, -15),
@@ -191,7 +213,6 @@ void GLScene::InitGL(int argc, char* argv[])
 	//set viewport to be entire window
 	glViewport(0, 0, 800, 800);
 
-	//
 	glEnable(GL_TEXTURE_2D);
 
 	//enable Depth Testing
@@ -213,6 +234,19 @@ void GLScene::InitGL(int argc, char* argv[])
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+}
+
+void GLScene::DrawString(const char* text, Vector3* position, Color* color) 
+{
+	glPushMatrix();
+	glDisable(GL_LIGHT0);
+	glDisable(GL_LIGHTING);
+	glTranslatef(position->x, position->y, position->z);
+	glRasterPos2f(0.0f, 0.0f);
+	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
+	glPopMatrix();
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
 }
 
 //Destructor

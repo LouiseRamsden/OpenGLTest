@@ -15,12 +15,15 @@ namespace MeshLoader
 	void LoadVertices(std::vector<Vertex> tempVertices, Mesh& mesh)
 	{
 		mesh.Vertices = new Vertex[mesh.VertexCount];
-
+		mesh.Colors = new Color[mesh.VertexCount];
 		for (int i = 0; i < mesh.VertexCount; i++)
 		{
 			mesh.Vertices[i].x = tempVertices[i].x;
 			mesh.Vertices[i].y = tempVertices[i].y;
 			mesh.Vertices[i].z = tempVertices[i].z;
+			mesh.Colors[i].r = tempVertices[i].x;
+			mesh.Colors[i].g = tempVertices[i].y;
+			mesh.Colors[i].b = tempVertices[i].z;
 		}
 	}
 

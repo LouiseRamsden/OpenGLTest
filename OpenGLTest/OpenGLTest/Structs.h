@@ -51,6 +51,7 @@ struct Mesh
 {
 	Vertex* Vertices;
 	Vector3* Normals;
+	Color* Colors;
 	GLushort* Indices;
 	TexCoord* TexCoords;
 	GLushort* TexCoordIndices;

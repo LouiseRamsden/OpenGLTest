@@ -25,14 +25,18 @@ void TeapotObject::Draw()
 {
 	if (m_mesh->Vertices != nullptr && m_mesh->Normals != nullptr && m_mesh->Indices != nullptr)
 	{
+		glDisable(GL_LIGHT0);
+		glDisable(GL_LIGHTING);
 		glEnableClientState(GL_VERTEX_ARRAY);
-		//glEnableClientState(GL_COLOR_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
-		//glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
+		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
+		
+		glColor3f(1.0f, 1.0f, 1.0f);
 		glTranslatef(m_position.x, m_position.y, m_position.z);
 		glRotatef(m_rotation * 10, 0.0f, 1.0f, 0.0f);
 		glRotatef(1, (float)m_xActive, (float)m_yActive, (float)m_zActive);
@@ -41,6 +45,8 @@ void TeapotObject::Draw()
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_LIGHTING);
 	}
 }
 void TeapotObject::Update() 
