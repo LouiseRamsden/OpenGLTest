@@ -1,10 +1,10 @@
 
-#include "CowObject.h"
+#include "LitObject.h"
 
 #include <sstream>
 
 
-CowObject::CowObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
+LitObject::LitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
 {
 	m_xActive = xRot;
 	m_yActive = yRot;
@@ -19,17 +19,17 @@ CowObject::CowObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, 
 
 		
 }
-CowObject::~CowObject()
+LitObject::~LitObject()
 {
 
 }
 
-void CowObject::SetRotation(float rotation)
+void LitObject::SetRotation(float rotation)
 {
 	m_rotation = rotation;
 	
 }
-void CowObject::SetMaterial() 
+void LitObject::SetMaterial()
 {
 	m_material = new Material();
 	m_material->Ambient.x = 0.8; m_material->Ambient.y = 0.8; m_material->Ambient.z = 0.9;
@@ -41,7 +41,7 @@ void CowObject::SetMaterial()
 	m_material->Shininess = 100.0f;
 
 }
-void CowObject::Draw()
+void LitObject::Draw()
 {
 	if (m_mesh->Vertices != nullptr && m_mesh->Normals != nullptr && m_mesh->Indices != nullptr) 
 	{
@@ -82,7 +82,7 @@ void CowObject::Draw()
 	}
 }
 
-void CowObject::Update()
+void LitObject::Update()
 {
 	m_rotation += m_rotSpeed;
 	if (m_rotation > 360.0f)

@@ -5,8 +5,8 @@
 #include <gl/GLU.h>
 #include "GL\freeglut.h"
 #include "GLUTCallbacks.h"
-#include "CowObject.h"
-#include "TeapotObject.h"
+#include "LitObject.h"
+#include "UnlitObject.h"
 
 #include "Structs.h"
 

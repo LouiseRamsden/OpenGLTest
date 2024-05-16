@@ -93,6 +93,9 @@ namespace MeshLoader
 			a.str(line);
 			for (std::string token; std::getline(a, token, ' ');)
 			{
+
+				
+
 				if (vertMode == true)
 				{
 					switch (lineNum)
@@ -141,19 +144,23 @@ namespace MeshLoader
 				}
 				if (indexMode == true)
 				{
+
 					std::istringstream b;
 					b.str(token);
 					uint8_t tokenCount = 0;
 					for (std::string indexToken; std::getline(b, indexToken, '/');)
 					{
+						if (indexToken == "")
+							break;
+
 						switch (tokenCount)
 						{
 						case 0:
-							tempIndices[mesh->IndexCount - 3 + lineNum] = (GLushort)stoi(token);
+							tempIndices[mesh->IndexCount - 3 + lineNum] = (GLushort)stoi(indexToken);
 							tokenCount++;
 							break;
 						case 1:
-							tempTexCoordindices[mesh->TexCoordIndexCount - 3 + lineNum] = (GLushort)stoi(token);
+							tempTexCoordindices[mesh->TexCoordIndexCount - 3 + lineNum] = (GLushort)stoi(indexToken);
 							tokenCount++;
 							break;
 						default:
@@ -206,9 +213,7 @@ namespace MeshLoader
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
 					tempIndices.push_back(0);
-					tempTexCoordindices.push_back(0);
-					tempTexCoordindices.push_back(0);
-					tempTexCoordindices.push_back(0);
+					tempIndices.push_back(0);
 					mesh->IndexCount += 3;
 					mesh->TexCoordIndexCount += 3;
 					lineNum = 0;

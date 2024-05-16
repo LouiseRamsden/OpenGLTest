@@ -1,7 +1,7 @@
-#include "TeapotObject.h"
+#include "UnlitObject.h"
 
 
-TeapotObject::TeapotObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
+UnlitObject::UnlitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
 {
 	m_xActive = xRot;
 	m_yActive = yRot;
@@ -16,12 +16,12 @@ TeapotObject::TeapotObject(Mesh* mesh, Texture2D* texture, float x, float y, flo
 
 
 }
-TeapotObject::~TeapotObject() 
+UnlitObject::~UnlitObject()
 {
 
 }
 
-void TeapotObject::Draw() 
+void UnlitObject::Draw()
 {
 	if (m_mesh->Vertices != nullptr && m_mesh->Normals != nullptr && m_mesh->Indices != nullptr)
 	{
@@ -49,7 +49,7 @@ void TeapotObject::Draw()
 		glEnable(GL_LIGHTING);
 	}
 }
-void TeapotObject::Update() 
+void UnlitObject::Update()
 {
 	
 }

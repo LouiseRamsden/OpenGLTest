@@ -129,24 +129,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CowObject.h" />
+    <ClInclude Include="LitObject.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="GLScene.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Structs.h" />
-    <ClInclude Include="TeapotObject.h" />
+    <ClInclude Include="UnlitObject.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CowObject.cpp" />
+    <ClCompile Include="LitObject.cpp" />
     <ClCompile Include="GLUTCallbacks.cpp" />
     <ClCompile Include="GLScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="SceneObject.cpp" />
-    <ClCompile Include="TeapotObject.cpp" />
+    <ClCompile Include="UnlitObject.cpp" />
     <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
