@@ -119,7 +119,7 @@ void GLScene::InitObjects()
 	Mesh* cowMesh = MeshLoader::Load((char*)"cow.obj");
 	Mesh* teapotMesh = MeshLoader::Load((char*)"teapot.obj");
 	Mesh* bunnyMesh = MeshLoader::Load((char*)"bunny.obj");
-
+	
 	//load textures
 	Texture2D* penguinTexture = new Texture2D();
 	penguinTexture->Load((char*)"penguins.raw", 512, 512);
@@ -139,7 +139,7 @@ void GLScene::InitObjects()
 			0.1f);
 	for (int i = 50; i < 100; i++)
 		m_objects[i] = new UnlitObject(
-			bunnyMesh,
+			teapotMesh,
 			penguinTexture,
 			RAND_IN_RANGE(15, -15),
 			RAND_IN_RANGE(15, -15),
@@ -148,7 +148,7 @@ void GLScene::InitObjects()
 			false,
 			true,
 			0.1f,
-			20.0f);
+			1.0f);
 
 	//Camera initializing
 	camera->eye.x = 0.0f;
