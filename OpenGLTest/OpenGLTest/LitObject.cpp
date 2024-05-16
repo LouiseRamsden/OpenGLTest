@@ -70,8 +70,8 @@ void LitObject::Draw()
 		glPushMatrix();
 		//glScalef(100.0f, 100.0f, 100.0f);
 		glTranslatef(m_position.x, m_position.y, m_position.z);
-		glRotatef(m_rotation * 10, 0.0f, 1.0f, 1.0f);
-		glRotatef(sinf(m_rotation)*50, (float)m_xActive, (float)m_yActive, (float)m_zActive);
+		glRotatef(/*m_rotation * 10 */ 0, 0.0f, 1.0f, 1.0f);
+		glRotatef(/*sinf(m_rotation) * 50*/0, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 		glDrawElements(GL_TRIANGLES, m_mesh->IndexCount, GL_UNSIGNED_SHORT, m_mesh->Indices);
 		glPopMatrix();
 

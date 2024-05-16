@@ -21,8 +21,10 @@ private:
 	bool m_yActive;
 	bool m_zActive;
 
+	float m_scale;
+
 public:
-	UnlitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
+	UnlitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed, float scale = 1.0f);
 	~UnlitObject();
 
 	void Draw() override;

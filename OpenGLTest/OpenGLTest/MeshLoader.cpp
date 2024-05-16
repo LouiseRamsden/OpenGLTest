@@ -226,13 +226,7 @@ namespace MeshLoader
 
 		}
 
-		for (int i = 0; i < mesh->NormalCount; i++)
-		{
-			std::cout << tempNormals[i].x;
-			std::cout << tempNormals[i].y;
-			std::cout << tempNormals[i].z;
-			std::cout << "\n";
-		}
+
 		std::cout << "Normal Count: " << mesh->NormalCount;
 
 		std::cout << mesh->TexCoordIndexCount << "\n";

@@ -1,7 +1,7 @@
 #include "UnlitObject.h"
 
 
-UnlitObject::UnlitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
+UnlitObject::UnlitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed, float scale) : SceneObject(mesh, texture)
 {
 	m_xActive = xRot;
 	m_yActive = yRot;
@@ -14,6 +14,7 @@ UnlitObject::UnlitObject(Mesh* mesh, Texture2D* texture, float x, float y, float
 	m_position.y = y;
 	m_position.z = z;
 
+	m_scale = scale;
 
 }
 UnlitObject::~UnlitObject()
@@ -37,7 +38,9 @@ void UnlitObject::Draw()
 		//glScalef(100.0f, 100.0f, 100.0f);
 		
 		glColor3f(1.0f, 1.0f, 1.0f);
+		
 		glTranslatef(m_position.x, m_position.y, m_position.z);
+		glScalef(m_scale, m_scale, m_scale);
 		glRotatef(m_rotation * 10, 0.0f, 1.0f, 0.0f);
 		glRotatef(1, (float)m_xActive, (float)m_yActive, (float)m_zActive);
 		glDrawElements(GL_TRIANGLES, m_mesh->IndexCount, GL_UNSIGNED_SHORT, m_mesh->Indices);
