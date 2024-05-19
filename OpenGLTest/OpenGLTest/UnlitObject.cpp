@@ -35,7 +35,6 @@ void UnlitObject::Draw()
 		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
 		glPushMatrix();
-		//glScalef(100.0f, 100.0f, 100.0f);
 		
 		glColor3f(1.0f, 1.0f, 1.0f);
 		

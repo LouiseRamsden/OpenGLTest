@@ -105,7 +105,6 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		camera->center.x += 0.5f;
 		break;
 	case '1':
-		std::cout << "a";
 		if (m_objects[0]->spinning == false)
 		{
 			m_objects[0]->spinning = true;
@@ -176,63 +175,66 @@ void GLScene::InitObjects()
 	Mesh* bunnyMesh = MeshLoader::Load((char*)"bunny.obj");
 	
 	//load textures
+	Texture2D* noTexture = new Texture2D();
 	Texture2D* penguinTexture = new Texture2D();
 	penguinTexture->Load((char*)"penguins.raw", 512, 512);
-
+	Texture2D* starsTexture = new Texture2D();
+	starsTexture->Load((char*)"stars.raw", 512, 512);
 	//make objects
-		m_objects[0] = new LitObject(
-			texturedCubeMesh,
-			penguinTexture,
+		
+		m_objects[0] = new UnlitObject(
+			teapotMesh,
+			noTexture,
 			10.0f,
 			0,
-			-5.0f,
+			0.0f,
 			true,
 			false,
 			true,
-			0.1f);
+			0.1f,
+			0.8f);
 		m_objects[1] = new UnlitObject(
-			teapotMesh,
-			penguinTexture,
+			cowMesh,
+			noTexture,
 			5.0f,
 			0,
-			-5.0f,
+			0.0f,
 			true,
 			false,
 			true,
 			0.1f,
-			1.0f);
-		m_objects[2] = new LitObject(
+			0.4f);
+		m_objects[2] = new UnlitObject(
+			bunnyMesh,
+			noTexture,
+			0.0f,
+			-0.25f,
+			0.0f,
+			true,
+			false,
+			true,
+			0.1f,
+			15.0f);
+		m_objects[3] = new LitObject(
 			texturedCubeMesh,
-			penguinTexture,
-			0,
-			0,
+			starsTexture,
 			-5.0f,
+			0,
+			0.f,
 			true,
 			false,
 			true,
 			0.1f);
-		m_objects[3] = new UnlitObject(
-			cowMesh,
-			penguinTexture,
-			-5.0f,
-			0,
-			-5.0f,
-			true,
-			false,
-			true,
-			0.1f,
-			0.5f);
-		m_objects[4] = new UnlitObject(
-			bunnyMesh,
+		m_objects[4] = new LitObject(
+			texturedCubeMesh,
 			penguinTexture,
 			-10.0f,
 			0,
-			-5.0f,
+			0.0f,
 			true,
 			false,
 			true,
-			0.1f,
-			10.0f);
+			0.1f);
 
 	//Camera initializing
 	camera->eye.x = 0.0f;
