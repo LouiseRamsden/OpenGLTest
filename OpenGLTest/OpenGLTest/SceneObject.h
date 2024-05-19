@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Structs.h"#
+#include "Structs.h"
 #include "Texture2D.h"
 
 class SceneObject
@@ -15,5 +15,7 @@ public:
 
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+
+	bool spinning = false;
 };
 

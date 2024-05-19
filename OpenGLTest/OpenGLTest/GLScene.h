@@ -12,7 +12,7 @@
 
 #define REFRESH_RATE 16
 
-#define NUM_OBJECTS
+#define OBJ_NUM 5
 
 
 class GLScene
@@ -37,7 +37,8 @@ public:
 	~GLScene(void);
 private:
 	Camera* camera;
-	SceneObject* m_objects[100];
+	bool m_objMoving[OBJ_NUM];
+	SceneObject* m_objects[OBJ_NUM];
 	Vector4* m_lightPosition;
 	Lighting* m_lightData;
 

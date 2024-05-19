@@ -63,13 +63,14 @@ void LitObject::Draw()
 
 		glTexCoordPointer(2, GL_FLOAT, 0, m_mesh->TexCoords);
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
-		//glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
 
 		glPushMatrix();
-		//glScalef(100.0f, 100.0f, 100.0f);
 		glTranslatef(m_position.x, m_position.y, m_position.z);
-		glRotatef(m_rotation * 2, 0.0f, 1.0f, 1.0f);
-		glRotatef(/*sinf(m_rotation) * 50*/0, (float)m_xActive, (float)m_yActive, (float)m_zActive);
+		if (spinning == true) 
+		{
+			glRotatef(m_rotation * 2, 0.0f, 1.0f, 1.0f);
+			glRotatef(sinf(m_rotation) * 50, (float)m_xActive, (float)m_yActive, (float)m_zActive);
+		}
 		glDrawElements(GL_TRIANGLES, m_mesh->IndexCount, GL_UNSIGNED_SHORT, m_mesh->Indices);
 		glPopMatrix();
 

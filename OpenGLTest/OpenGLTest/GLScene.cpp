@@ -6,11 +6,19 @@
 #include <time.h>
 #include <random>
 #include <string>
+#include <iostream>
+
+#define OBJ_NUM 5
 
 //GLScene Constructor calls initialization and the glut mainloop
 GLScene::GLScene(int argc, char* argv[]) 
 {	
 	
+	for (int i = 0; i < OBJ_NUM; i++) 
+	{
+		m_objMoving[i] = false;
+	}
+
 	
 	InitGL(argc, argv);
 	InitObjects();
@@ -28,11 +36,9 @@ void GLScene::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Draw Objects
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < OBJ_NUM; i++)
 		m_objects[i]->Draw();
-	
-	for (int i = 50; i < 100; i++)
-		m_objects[i]->Draw();
+
 
 	//Drawing Text
 	Vector3 v = { camera->center.x + 8.0f, camera->center.y + 7.5f, camera->center.z - 0.5f};
@@ -68,9 +74,7 @@ void GLScene::Update()
 	glLightfv(GL_LIGHT0, GL_POSITION, &(m_lightPosition->x));
 
 	//Update Objects
-	for (int i = 0; i < 50; i++)
-		m_objects[i]->Update();
-	for (int i = 50; i < 100; i++)
+	for (int i = 0; i < OBJ_NUM; i++)
 		m_objects[i]->Update();
 
 	//Redisplay Screen
@@ -100,6 +104,57 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		camera->eye.x += 0.5f;
 		camera->center.x += 0.5f;
 		break;
+	case '1':
+		std::cout << "a";
+		if (m_objects[0]->spinning == false)
+		{
+			m_objects[0]->spinning = true;
+		}
+		else
+		{
+			m_objects[0]->spinning = false;
+		}
+		break;
+	case '2':
+		if (m_objects[1]->spinning == false)
+		{
+			m_objects[1]->spinning = true;
+		}
+		else
+		{
+			m_objects[1]->spinning = false;
+		}
+		break;
+	case '3':
+		if (m_objects[2]->spinning == false)
+		{
+			m_objects[2]->spinning = true;
+		}
+		else
+		{
+			m_objects[2]->spinning = false;
+		}
+		break;
+	case '4':
+		if (m_objects[3]->spinning == false)
+		{
+			m_objects[3]->spinning = true;
+		}
+		else
+		{
+			m_objects[3]->spinning = false;
+		}
+		break;
+	case '5':
+		if (m_objects[4]->spinning == false)
+		{
+			m_objects[4]->spinning = true;
+		}
+		else
+		{
+			m_objects[4]->spinning = false;
+		}
+		break;
 	default:
 		break;
 	}
@@ -125,30 +180,59 @@ void GLScene::InitObjects()
 	penguinTexture->Load((char*)"penguins.raw", 512, 512);
 
 	//make objects
-	srand(time(NULL));
-	for (int i = 0; i < 50; i++)
-		m_objects[i] = new LitObject(
+		m_objects[0] = new LitObject(
 			texturedCubeMesh,
 			penguinTexture,
-			RAND_IN_RANGE(15, -15),
-			RAND_IN_RANGE(15, -15),
-			RAND_IN_RANGE(15, -15),
+			10.0f,
+			0,
+			-5.0f,
 			true,
 			false,
 			true,
 			0.1f);
-	for (int i = 50; i < 100; i++)
-		m_objects[i] = new UnlitObject(
+		m_objects[1] = new UnlitObject(
 			teapotMesh,
 			penguinTexture,
-			RAND_IN_RANGE(15, -15),
-			RAND_IN_RANGE(15, -15),
-			RAND_IN_RANGE(15, -15),
+			5.0f,
+			0,
+			-5.0f,
 			true,
 			false,
 			true,
 			0.1f,
 			1.0f);
+		m_objects[2] = new LitObject(
+			texturedCubeMesh,
+			penguinTexture,
+			0,
+			0,
+			-5.0f,
+			true,
+			false,
+			true,
+			0.1f);
+		m_objects[3] = new UnlitObject(
+			cowMesh,
+			penguinTexture,
+			-5.0f,
+			0,
+			-5.0f,
+			true,
+			false,
+			true,
+			0.1f,
+			0.5f);
+		m_objects[4] = new UnlitObject(
+			bunnyMesh,
+			penguinTexture,
+			-10.0f,
+			0,
+			-5.0f,
+			true,
+			false,
+			true,
+			0.1f,
+			10.0f);
 
 	//Camera initializing
 	camera->eye.x = 0.0f;
@@ -202,29 +286,25 @@ void GLScene::InitGL(int argc, char* argv[])
 	//callback game scene init
 	GLUTCallbacks::Init(this);
 
-	//glut init
+	//glut init functions
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Object Rotation Simulator");
-
-
-
+	glutCreateWindow("The Museum");
 
 	//glut callback settings
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 
-
-
 	//set matrix mode
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//set viewport to be entire window
 	glViewport(0, 0, 800, 800);
-
+	
+	//Enable texturing
 	glEnable(GL_TEXTURE_2D);
 
 	//enable Depth Testing
@@ -232,13 +312,8 @@ void GLScene::InitGL(int argc, char* argv[])
 	//set correct perspective
 	gluPerspective(45, 1, 0.1f, 1000); //ZNEAR MUST BE NON ZERO
 
-
-
 	//set matrixmode back to modelview
 	glMatrixMode(GL_MODELVIEW);
-
-
-
 
 	//enable backface culling
 	glEnable(GL_CULL_FACE);
@@ -247,7 +322,7 @@ void GLScene::InitGL(int argc, char* argv[])
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 }
-
+//Draw text at location 
 void GLScene::DrawString(const char* text, Vector3* position, Color* color) 
 {
 	glPushMatrix();
