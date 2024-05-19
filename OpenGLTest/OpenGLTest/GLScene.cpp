@@ -222,7 +222,7 @@ void GLScene::InitObjects()
 			0,
 			0.f,
 			true,
-			false,
+			true,
 			true,
 			0.1f);
 		m_objects[4] = new LitObject(
