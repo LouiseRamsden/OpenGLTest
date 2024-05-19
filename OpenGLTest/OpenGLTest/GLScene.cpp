@@ -41,7 +41,7 @@ void GLScene::Display()
 
 	//Drawing Text
 	Vector3 v = { camera->center.x + 8.0f, camera->center.y + 7.5f, camera->center.z - 0.5f};
-	Color c = { 1.0f, 1.0f, 0.0f };
+	Color c = { 0.0f, 1.0f, 0.0f };
 	DrawString("Hello", &v, &c);
 	
 	//Flush GPU
@@ -337,11 +337,12 @@ void GLScene::InitGL(int argc, char* argv[])
 //Draw text at location 
 void GLScene::DrawString(const char* text, Vector3* position, Color* color) 
 {
-	glPushMatrix();
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHTING);
+	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glTranslatef(position->x, position->y, position->z);
+	glColor3f(color->r, color->g, color->b);
 	glRasterPos2f(0.0f, 0.0f);
 	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
 	glPopMatrix();
