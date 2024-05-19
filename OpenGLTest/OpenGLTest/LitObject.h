@@ -26,8 +26,10 @@ private:
 
 	Material* m_material;
 
+	Texture2D* m_swapTexture;
+
 public:
-	LitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
+	LitObject(Mesh* mesh, Texture2D* texture, Texture2D* swapTexture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed);
 	~LitObject();
 
 	void SetRotation(float rotation);

@@ -33,6 +33,7 @@ void UnlitObject::Draw()
 
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
 		glColorPointer(3, GL_FLOAT, 0, m_mesh->Colors);
+		glBindTexture(GL_TEXTURE_2D, 0); // Bind Nothing
 
 		glPushMatrix();
 		

@@ -2,7 +2,7 @@
 #include "LitObject.h"
 
 //Objects that can be affected by light and can be textured
-LitObject::LitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
+LitObject::LitObject(Mesh* mesh, Texture2D* texture,Texture2D* swapTexture, float x, float y, float z, bool xRot, bool yRot, bool zRot, float rotSpeed) : SceneObject(mesh, texture)
 {
 	m_xActive = xRot;
 	m_yActive = yRot;
@@ -14,6 +14,8 @@ LitObject::LitObject(Mesh* mesh, Texture2D* texture, float x, float y, float z, 
 	m_position.x = x;
 	m_position.y = y;
 	m_position.z = z;
+
+	m_swapTexture = swapTexture;
 
 		
 }
@@ -56,13 +58,22 @@ void LitObject::Draw()
 		glEnableClientState(GL_VERTEX_ARRAY);
 		//glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_NORMAL_ARRAY);
-		glNormalPointer(GL_FLOAT, 0, m_mesh->Normals);
-
-		glBindTexture(GL_TEXTURE_2D, m_texture->GetID());
+		
+		if (spinning == true)
+		{
+			glBindTexture(GL_TEXTURE_2D, m_texture->GetID());
+		}
+		else 
+		{
+			glBindTexture(GL_TEXTURE_2D, m_swapTexture->GetID());
+			
+		}
+		
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		glTexCoordPointer(2, GL_FLOAT, 0, m_mesh->TexCoords);
 		glVertexPointer(3, GL_FLOAT, 0, m_mesh->Vertices);
+		glNormalPointer(GL_FLOAT, 0, m_mesh->Normals);
 
 		glPushMatrix();
 		glTranslatef(m_position.x, m_position.y, m_position.z);

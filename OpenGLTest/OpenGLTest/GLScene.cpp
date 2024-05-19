@@ -39,7 +39,6 @@ void GLScene::Display()
 	for (int i = 0; i < OBJ_NUM; i++)
 		m_objects[i]->Draw();
 
-
 	//Drawing Text
 	Vector3 v = { camera->center.x + 8.0f, camera->center.y + 7.5f, camera->center.z - 0.5f};
 	Color c = { 1.0f, 1.0f, 0.0f };
@@ -77,6 +76,7 @@ void GLScene::Update()
 	for (int i = 0; i < OBJ_NUM; i++)
 		m_objects[i]->Update();
 
+
 	//Redisplay Screen
 	glutPostRedisplay();
 }
@@ -104,6 +104,11 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		camera->eye.x += 0.5f;
 		camera->center.x += 0.5f;
 		break;
+	case 'q':
+		camera->eye.y += 0.5f;
+		break;
+	case 'e':
+		camera->eye.y -= 0.5f;
 	case '1':
 		if (m_objects[0]->spinning == false)
 		{
@@ -217,10 +222,11 @@ void GLScene::InitObjects()
 			15.0f);
 		m_objects[3] = new LitObject(
 			texturedCubeMesh,
+			penguinTexture,
 			starsTexture,
 			-5.0f,
 			0,
-			0.f,
+			0.0f,
 			true,
 			true,
 			true,
@@ -228,13 +234,17 @@ void GLScene::InitObjects()
 		m_objects[4] = new LitObject(
 			texturedCubeMesh,
 			penguinTexture,
+			starsTexture,
 			-10.0f,
 			0,
 			0.0f,
 			true,
-			false,
+			true,
 			true,
 			0.1f);
+
+		
+		
 
 	//Camera initializing
 	camera->eye.x = 0.0f;
@@ -330,6 +340,7 @@ void GLScene::DrawString(const char* text, Vector3* position, Color* color)
 	glPushMatrix();
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHTING);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glTranslatef(position->x, position->y, position->z);
 	glRasterPos2f(0.0f, 0.0f);
 	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
