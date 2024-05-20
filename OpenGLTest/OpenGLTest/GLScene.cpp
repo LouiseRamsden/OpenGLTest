@@ -18,7 +18,6 @@ GLScene::GLScene(int argc, char* argv[])
 	{
 		m_objMoving[i] = false;
 	}
-
 	
 	InitGL(argc, argv);
 	InitObjects();
@@ -40,10 +39,21 @@ void GLScene::Display()
 		m_objects[i]->Draw();
 
 	//Drawing Text
-	Vector3 v = { camera->center.x + 8.0f, camera->center.y + 7.5f, camera->center.z - 0.5f};
+	Vector3 v = { camera->center.x + 2.5f, camera->center.y + 7.5f, camera->center.z};
+	Vector3 v2 = { camera->center.x + 2.5f, camera->center.y + 5.5f, camera->center.z };
 	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("Hello", &v, &c);
-	
+	DrawString("Press 1-5 to move the objects", &v, &c);
+	DrawString("WASD to move, QE to rotate", &v2, &c);
+
+	for (int i = 0; i < OBJ_NUM; i++) 
+	{
+		if (m_objects[i]->spinning == true) 
+		{
+			Vector3 v3 = { m_objects[i]->GetPosition().x,m_objects[i]->GetPosition().y - 3.0f,m_objects[i]->GetPosition().z };
+			DrawString("^ SPINNING", &v3, &c);
+		}
+			
+	}
 	//Flush GPU
 	glFlush();
 	glutSwapBuffers();
@@ -88,27 +98,28 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 	{
 	//forward/backward
 	case 'w':
-		camera->eye.z -= 0.5f;
-		camera->center.z -= 0.5f;
-		break;
-	case 's':
 		camera->eye.z += 0.5f;
 		camera->center.z += 0.5f;
 		break;
+	case 's':
+		camera->eye.z -= 0.5f;
+		camera->center.z -= 0.5f;
+		break;
 	//left/right
 	case 'a':
-		camera->eye.x -= 0.5f;
-		camera->center.x -= 0.5f;
-		break;
-	case 'd':
 		camera->eye.x += 0.5f;
 		camera->center.x += 0.5f;
 		break;
+	case 'd':
+		camera->eye.x -= 0.5f;
+		camera->center.x -= 0.5f;
+		break;
 	case 'q':
-		camera->eye.y += 0.5f;
+		camera->center.x -= 0.5f;
 		break;
 	case 'e':
-		camera->eye.y -= 0.5f;
+		camera->center.x += 0.5f;
+		break;
 	case '1':
 		if (m_objects[0]->spinning == false)
 		{
@@ -343,7 +354,7 @@ void GLScene::DrawString(const char* text, Vector3* position, Color* color)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glTranslatef(position->x, position->y, position->z);
 	glColor3f(color->r, color->g, color->b);
-	glRasterPos2f(0.0f, 0.0f);
+	glRasterPos2f(0.0f,0.0f);
 	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
 	glPopMatrix();
 	glEnable(GL_LIGHT0);

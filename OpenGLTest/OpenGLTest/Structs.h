@@ -4,9 +4,6 @@
 
 #include <cmath>
 
-
-
-
 struct Vector3
 {
 	float x, y, z;

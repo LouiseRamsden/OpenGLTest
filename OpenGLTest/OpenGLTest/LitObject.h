@@ -12,9 +12,6 @@
 class LitObject : public SceneObject
 {
 private:
-
-
-	Vector3 m_position;
 	float m_rotation;
 
 	unsigned char m_rotAxis;

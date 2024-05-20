@@ -32,7 +32,7 @@ bool Texture2D::Load(char* path, int width, int height)
 	inFile.read(tempTextureData, fileSize);
 	inFile.close();
 
-	std::cout << path << " loaded :)" << std::endl;
+	std::cout << path << " loaded" << std::endl;
 
 	glGenTextures(1, &m_ID);
 	glBindTexture(GL_TEXTURE_2D, m_ID);
