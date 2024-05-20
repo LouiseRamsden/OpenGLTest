@@ -54,7 +54,7 @@ void GLScene::Display()
 		}
 		else 
 		{
-			DrawString(" ^ NO SPINNING :(",&v3, &c);
+			DrawString(" ^ NO SPINNING :(" ,&v3, &c);
 		}
 			
 	}
