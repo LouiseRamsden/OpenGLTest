@@ -43,14 +43,18 @@ void GLScene::Display()
 	Vector3 v2 = { camera->center.x + 2.5f, camera->center.y + 5.5f, camera->center.z };
 	Color c = { 0.0f, 1.0f, 0.0f };
 	DrawString("Press 1-5 to move the objects", &v, &c);
-	DrawString("WASD to move, QE to rotate", &v2, &c);
+	DrawString("WASD to move, Mouse to rotate", &v2, &c);
 
 	for (int i = 0; i < OBJ_NUM; i++) 
 	{
+		Vector3 v3 = { m_objects[i]->GetPosition().x,m_objects[i]->GetPosition().y - 3.0f,m_objects[i]->GetPosition().z };
 		if (m_objects[i]->spinning == true) 
 		{
-			Vector3 v3 = { m_objects[i]->GetPosition().x,m_objects[i]->GetPosition().y - 3.0f,m_objects[i]->GetPosition().z };
-			DrawString("^ SPINNING", &v3, &c);
+			DrawString("^ SPINNING!!", &v3, &c);
+		}
+		else 
+		{
+			DrawString(" ^ NO SPINNING :(",&v3, &c);
 		}
 			
 	}
@@ -176,6 +180,11 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 
 
 
+}
+
+void GLScene::PassiveMotion(int x, int y) 
+{
+	camera->center.x = ((float)x - 400) / 90.0f;
 }
 
 //Init Objects, initializes all the objects and textures and the camera, and makes sure that they are loaded and initialized
@@ -320,6 +329,7 @@ void GLScene::InitGL(int argc, char* argv[])
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESH_RATE, GLUTCallbacks::Timer, REFRESH_RATE);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutPassiveMotionFunc(GLUTCallbacks::PassiveMotion);
 
 	//set matrix mode
 	glMatrixMode(GL_PROJECTION);

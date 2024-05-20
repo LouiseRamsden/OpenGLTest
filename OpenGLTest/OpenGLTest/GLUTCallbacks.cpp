@@ -41,4 +41,9 @@ namespace GLUTCallbacks
 	{
 		glScene->Keyboard(key, x, y);
 	}
+
+	void PassiveMotion(int x, int y) 
+	{
+		glScene->PassiveMotion(x, y);
+	}
 }

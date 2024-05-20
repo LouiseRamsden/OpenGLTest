@@ -13,4 +13,6 @@ namespace GLUTCallbacks
 	void Timer(int refreshMS);
 
 	void Keyboard(unsigned char key, int x, int y);
+
+	void PassiveMotion(int x, int y);
 }
