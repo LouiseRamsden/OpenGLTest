@@ -41,20 +41,22 @@ void GLScene::Display()
 	//Drawing Text
 	Vector3 v = { camera->center.x + 2.5f, camera->center.y + 7.5f, camera->center.z};
 	Vector3 v2 = { camera->center.x + 2.5f, camera->center.y + 5.5f, camera->center.z };
+	Vector3 v3 = { camera->center.x + 2.5f, camera->center.y + 3.5f, camera->center.z };
 	Color c = { 0.0f, 1.0f, 0.0f };
 	DrawString("Press 1-5 to move the objects", &v, &c);
 	DrawString("WASD to move, Mouse to rotate", &v2, &c);
+	DrawString("Press E to Centre camera on bunny", &v3, &c);
 
 	for (int i = 0; i < OBJ_NUM; i++) 
 	{
-		Vector3 v3 = { m_objects[i]->GetPosition().x,m_objects[i]->GetPosition().y - 3.0f,m_objects[i]->GetPosition().z };
+		Vector3 v4 = { m_objects[i]->GetPosition().x,m_objects[i]->GetPosition().y - 3.0f,m_objects[i]->GetPosition().z };
 		if (m_objects[i]->spinning == true) 
 		{
-			DrawString("^ SPINNING!!", &v3, &c);
+			DrawString("^ SPINNING!!", &v4, &c);
 		}
 		else 
 		{
-			DrawString(" ^ NO SPINNING :(" ,&v3, &c);
+			DrawString(" ^ NO SPINNING :(" ,&v4, &c);
 		}
 			
 	}
@@ -118,11 +120,8 @@ void GLScene::Keyboard(unsigned char key, int x, int y)
 		camera->eye.x -= 0.5f;
 		camera->center.x -= 0.5f;
 		break;
-	case 'q':
-		camera->center.x -= 0.5f;
-		break;
 	case 'e':
-		camera->center.x += 0.5f;
+		camera->center = m_objects[2]->GetPosition();
 		break;
 	case '1':
 		if (m_objects[0]->spinning == false)

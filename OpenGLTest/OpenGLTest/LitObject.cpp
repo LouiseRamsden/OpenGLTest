@@ -39,16 +39,11 @@ void LitObject::SetMaterial()
 	m_material->Specular.x = 1.0; m_material->Specular.y = 1.0; m_material->Specular.z = 1.0;
 	m_material->Specular.w = 1.0;
 	m_material->Shininess = 100.0f;
-
 }
 void LitObject::Draw()
 {
 	if (m_mesh->Vertices != nullptr && m_mesh->Normals != nullptr && m_mesh->Indices != nullptr) 
 	{
-		
-
-		
-		
 		SetMaterial();
 		glMaterialfv(GL_FRONT, GL_AMBIENT, &(m_material->Ambient.x));
 		glMaterialfv(GL_FRONT, GL_SPECULAR, &(m_material->Specular.x));
@@ -87,7 +82,6 @@ void LitObject::Draw()
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
-		
 	}
 }
 
